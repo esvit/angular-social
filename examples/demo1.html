@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="js/angular.min.js"></script>
+        <script src="../angular-social.src.js"></script>
+        <link rel="stylesheet" href="../angular-social.css">
+    </head>
+<body ng-app="main">
+
+    <div ng-controller="DemoCtrl">
+
+        <div ng-social-buttons="facebook,googleplus,twitter">
+        <ul class="social-likes">
+	<li title="Share link on Facebook" class="social-likes__widget social-likes__widget_facebook">
+    <span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span><span class="social-likes__counter social-likes__counter_facebook">30</span></li>
+	<li title="Share link on Twitter" class="social-likes__widget social-likes__widget_twitter"><span class="social-likes__button social-likes__button_twitter"><span class="social-likes__icon social-likes__icon_twitter"></span>Twitter</span><span class="social-likes__counter social-likes__counter_twitter">16</span></li>
+	<li title="Share link on Google+" class="social-likes__widget social-likes__widget_plusone"><span class="social-likes__button social-likes__button_plusone"><span class="social-likes__icon social-likes__icon_plusone"></span>Google+</span></li>
+</ul>
+        <div>
+
+        <script>
+        var app = angular.module('main', ['ngSocial']).
+        controller('DemoCtrl', function($scope) {
+        
+        })
+        </script>
+
+    </div>
+
+
+</body>
+</html>

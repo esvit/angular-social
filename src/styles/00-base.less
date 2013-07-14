@@ -1,0 +1,177 @@
+.linear-gradient(@startColor: #555, @endColor: #333) {
+    background-color: mix(@startColor, @endColor, 60%);
+    background-image: -moz-linear-gradient(@startColor, @endColor); // FF 3.6+
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(@startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(@startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(to bottom, @startColor, @endColor); // Standard, IE10
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor),argb(@endColor))); // IE9 and down
+}
+
+.ng-social,
+.ng-social-_widget {
+	display:inline-block;
+	vertical-align:middle;
+	line-height:20px;
+	text-indent:0;
+	padding:0;
+	border:0;
+	word-spacing:0;
+	font-size:14px;
+	*zoom:1;
+	*display:inline;
+}
+
+.ng-social {
+	margin:-3px;
+	line-height:26px;
+	list-style:none;
+
+	li {
+		display:inline-block;
+		*zoom:1;
+		*display:inline;
+	}
+	&_vertical li {
+		display:block;
+	}
+	&__widget {
+		display:inline-block;
+		position:relative;
+		margin:3px;
+		white-space:nowrap;
+	}
+	&__widget:before {
+		display:none;  // Remove nice bullets
+	}
+
+	&-button,
+	&-counter,
+	&-balloon,
+	&-balloon__code {
+		font-family:"Trebuchet MS", "Helvetica Neue", Tahoma, sans-serif;
+		font-size:14px;
+		text-rendering:optimizeLegibility;
+	}
+
+	&-button,
+	&-counter {
+		display:inline-block;
+		*display:inline;
+		*float:left;
+		margin:0;
+		line-height:18px;
+		border-width:1px;
+		border-style:solid;
+		border-radius:3px;
+		outline:0;
+	}
+
+	&-button {
+		position:relative;
+		padding:1px 4px 1px 20px;
+		font-weight:bold;
+		text-shadow:0 1px 0 hsla(0,0%,100%,.6);
+		box-shadow:0 1px 1px hsla(0,0%,0%,.05);
+		transition:border .1s ease-in-out, color .2s ease-in-out;
+		cursor:pointer;
+		user-select:none;
+		
+		// Prevent layout breaking without labels
+		&:before {
+			content:"";
+			display:inline-block;
+		}
+	}
+
+	&-icon {
+		position:absolute;
+		top:0;
+		left:0;
+		width:20px;
+		height:20px;
+		background-repeat:no-repeat;
+	}
+
+	&-counter {
+        position:relative;
+        margin-left:7px;
+        padding:1px 4px;
+        font-weight:normal;
+        color:#666;
+        color:hsla(0,0%,0%,.5);
+        cursor:default;
+
+        &:before,
+        &:after {
+            content:"";
+            position:absolute;
+            width:0;
+            height:0;
+        }
+        &:before {
+            top:4px;
+            left:-6px;
+            border:6px inset transparent;  // inset fixes strange artefacts in Firefox
+            border-left:0;
+            border-right:6px solid;
+            border-right-color:inherit;
+            opacity:.7;
+        }
+        &:after {
+            top:5px;
+            left:-4px;
+            border:5px inset transparent;  // inset fixes strange artefacts in Firefox
+            border-left:0;
+            border-right:5px solid;
+        }
+    }
+
+    &-close {
+        position:absolute;
+        right:0;
+        top:0;
+        padding:2px 4px;
+        font:16px Verdana, Geneva, Tahoma, sans-serif;
+        color:#999;
+        cursor:pointer;
+
+        &:hover {
+            color:#111;
+        }
+        &:before {
+            display:none;  // Remove nice bullets
+        }
+    }
+
+	// Vertical mode
+	&_vertical {
+		margin:-6px -4px;
+
+		.ng-social-widget {
+			display:block;
+			margin:6px 4px;
+		}
+	}
+
+	// Single button mode
+	&_single-w {
+		position:relative;
+		display:inline-block;
+	}
+	&_single {
+		position:absolute;
+		display:none;
+		top:-6px;
+		left:-6px;
+		padding:6px 6px 4px;
+		background:#fff;
+		text-align:left;
+		box-shadow:0 0 15px hsla(0,0%,0%,.3);
+		z-index:99999;
+	}
+	&_single &__widget:first-of-type {
+		margin-right:14px;  // Prevent collapse of widget and close button
+	}
+}
