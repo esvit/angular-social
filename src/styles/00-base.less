@@ -24,12 +24,13 @@
 }
 
 .ng-social {
-	margin:-3px;
+	margin: 0;
 	line-height:26px;
 	list-style:none;
 
 	li {
 		display:inline-block;
+        margin:0 5px;
 		*zoom:1;
 		*display:inline;
 	}
@@ -50,9 +51,8 @@
 	&-counter,
 	&-balloon,
 	&-balloon__code {
-		font-family:"Trebuchet MS", "Helvetica Neue", Tahoma, sans-serif;
-		font-size:14px;
-		text-rendering:optimizeLegibility;
+		font-family: Tahoma, sans-serif;
+		font-size: 12px;
 	}
 
 	&-button,
@@ -70,9 +70,9 @@
 
 	&-button {
 		position:relative;
-		padding:1px 4px 1px 20px;
+		padding:1px 10px 1px 20px;
 		font-weight:bold;
-		text-shadow:0 1px 0 hsla(0,0%,100%,.6);
+		//text-shadow:0 1px 0 hsla(0,0%,100%,.6);
 		box-shadow:0 1px 1px hsla(0,0%,0%,.05);
 		transition:border .1s ease-in-out, color .2s ease-in-out;
 		cursor:pointer;
@@ -83,6 +83,9 @@
 			content:"";
 			display:inline-block;
 		}
+        &:hover {
+            text-decoration: none;
+        }
 	}
 
 	&-icon {
@@ -96,11 +99,11 @@
 
 	&-counter {
         position:relative;
-        margin-left:7px;
-        padding:1px 4px;
+        margin-left: -6px;
+        padding:1px 6px;
         font-weight:normal;
+        border-radius:0 3px 3px 0;
         color:#666;
-        color:hsla(0,0%,0%,.5);
         cursor:default;
 
         &:before,

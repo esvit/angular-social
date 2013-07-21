@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "angular-social.js",
   "ignore": [
-    "examples", "src"
+    "examples",
+    "src"
   ],
   "dependencies": {
     "angular": "~1.0.6"

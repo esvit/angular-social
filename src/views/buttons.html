@@ -1,8 +1,10 @@
-<ul class="ng-social">
-    <li ng-repeat="(button, options) in buttons">
-        <a ng-href="{{link(button, options)}}" target="_blank" ng-click="clickShare($event, button, options)" class="ng-social-button" ng-class="'ng-social-button_' + button">
-            <span class="ng-social-icon"></span>
+<ul class="ng-social ng-cloak">
+    <li>Share:</li>
+    <li ng-repeat="(button, options) in buttons" ng-class="'ng-social-button_' + button">
+        <a ng-href="{{link(button, options)}}" target="_blank" ng-click="clickShare($event, button, options)" class="ng-social-button">
+            <span class="ng-social-icon" ng-class="options.icon"></span>
             <span class="ng-social-text">{{options.title}}</span>
         </a>
+        <span ng-show="options.count" class="ng-social-counter">{{ options.count }}</span>
     </li>
 </ul>

@@ -1,30 +1,30 @@
 /* Twitter */
 .ng-social-button_twitter {
+  @btn-color: #d5e6ef;
+
+  .ng-social-button {
     padding-left:19px;
-    background:#d5e6ef;
-    .linear-gradient(#fff, #d5e6ef);
+    background: @btn-color;
+    .linear-gradient(lighten(@btn-color, 10%), @btn-color);
     color:#186487;
-    border-color:#a4cce5;
-    border-color:hsla(203,56%,77%,.8);
-    border-bottom-color:hsla(203,31%,71%,.8);
+    border-color: #a4cce5;
 
     &:hover {
-        background:#bfdfed;
-        .linear-gradient(#f2f8fc, #bfdfed);
-        color:#0b3752;
-        border-color:#9cbbcf;
-        border-bottom-color:#68a0c4;
+      border-color:#9cbbcf;
+      .linear-gradient(#f2f8fc, #bfdfed);
+      color:#0b3752;
     }
-    .ng-social-icon {
-        background-image:url('twitter.png');
-        background-position:3px 5px;
-    }
-    .ng-social-counter {
-        background:#f2f8fc;
-        border-color:#a4cce5;
+  }
+  .ng-social-icon {
+    background-image:url('twitter.png');
+    background-position:3px 5px;
+  }
+  .ng-social-counter {
+    background: mix(@btn-color, #fff, 10%);
+    border-color: #a4cce5;
 
-        &:after {
-            border-right-color:#f2f8fc;
-        }
+    &:after {
+      border-right-color: mix(@btn-color, #fff, 10%);
     }
+  }
 }

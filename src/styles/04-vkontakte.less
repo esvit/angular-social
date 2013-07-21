@@ -1,31 +1,29 @@
 /* Vkontakte */
 .ng-social-button_vkontakte {
-    background:#436f96;
-    .linear-gradient(#8faecf, #436f96);
+  @btn-color: #436f96;
+
+  .ng-social-button {
+    padding-left:19px;
+    background: @btn-color;
+    .linear-gradient(lighten(@btn-color, 10%), @btn-color);
     color:#fff;
-    color:hsla(0,0%,100%,.95);
-    border-color:#4d84c1;
-    border-color:hsla(212,48%,53%,.8);
-    border-bottom-color:hsla(211,42%,35%,.8);
-    text-shadow: 0 -1px 0 hsla(0,0%,0%,.3);
-    
+    border-color: darken(@btn-color, 20%);
+
     &:hover {
-        background:#4e80ab;
-        .linear-gradient(#a2c0df, #4e80ab);
-        color:#fff;
-        color:hsla(0,0%,100%,.99);
-        border-color:#5788be;
-        border-bottom-color:#3b6798;
+      border-color: darken(@btn-color, 10%);
+      .linear-gradient(@btn-color, darken(@btn-color, 10%));
     }
-    .ng-social-icon {
-        background-image:url('vkontakte.png');
-        background-position:1px 2px;
+  }
+  .ng-social-icon {
+    background-image:url('vkontakte.png');
+    background-position:1px 2px;
+  }
+  .ng-social-counter {
+    background: mix(@btn-color, #fff, 10%);
+    border-color: @btn-color;
+
+    &:after {
+      border-right-color: mix(@btn-color, #fff, 10%);
     }
-    .ng-social-counter {
-        background:#eaeef3;
-        border-color:#afc1d4;
-    }
-    .ng-social-counter:after {
-        border-right-color:#eaeef3;
-    }
+  }
 }
