@@ -326,7 +326,7 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function() {
         replace: true,
         transclude: true,
         template: '<li> \
-                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
+                    <a ng-href="{{ctrl.link(options)}}" target="_blank" class="ng-social-button"> \
                         <span class="ng-social-icon"></span> \
                         <span class="ng-social-text" ng-transclude></span> \
                     </a> \
@@ -367,7 +367,7 @@ angular.module("ngSocial").directive('ngSocialGithub', function() {
         replace: true,
         transclude: true,
         template: '<li> \
-                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
+                    <a ng-href="{{ctrl.link(options)}}" target="_blank" class="ng-social-button"> \
                         <span class="ng-social-icon"></span> \
                         <span class="ng-social-text" ng-transclude></span> \
                     </a> \
