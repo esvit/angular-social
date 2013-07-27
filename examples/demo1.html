@@ -10,18 +10,40 @@
 
         <link rel="stylesheet" href="css/bootstrap.css">
         <script src="js/angular.min.js"></script>
-        <script src="../src/scripts/directive.js"></script>
+        <script src="../src/scripts/00-directive.js"></script>
+        <script src="../src/scripts/02-facebook.js"></script>
+        <script src="../src/scripts/03-twitter.js"></script>
+        <script src="../src/scripts/04-google-plus.js"></script>
+        <script src="../src/scripts/05-vk.js"></script>
+        <script src="../src/scripts/06-odnoklassniki.js"></script>
+        <script src="../src/scripts/07-mailru.js"></script>
+        <script src="../src/scripts/08-pinterest.js"></script>
+        <script src="../src/scripts/09-github.js"></script>
+        <script src="../src/scripts/09-github-forks.js"></script>
         <link rel="stylesheet" href="../angular-social.css">
     </head>
 <body ng-app="main">
 
     <div ng-controller="DemoCtrl">
 
-        <div ng-social-buttons="facebook,googleplus,twitter,vkontakte" data-url="'http://news.mistinfo.com/'"
+        <ul ng-social-buttons
+             data-url="'http://news.mistinfo.com/'"
              data-title="'test'"
              data-description="'test2'"
              data-image="'http://s3.mistinfo.com/32/d8/32d8eab76f4c242f665bda66b5edc6c5.jpg'">
-        <div>
+            <li>Share:</li>
+            <li class="ng-social-facebook">Facebook</li>
+            <li class="ng-social-google-plus">Google+</li>
+            <li class="ng-social-twitter">Twitter</li>
+            <li class="ng-social-vk">Вконтакте</li>
+            <li class="ng-social-odnoklassniki">Одноклассники</li>
+            <li class="ng-social-mailru">Мой мир</li>
+            <li class="ng-social-pinterest">Pinterest</li>
+            <li class="ng-social-github" user="esvit" repository="ng-table">GitHub</li>
+            <li class="ng-social-github-forks" user="esvit" repository="ng-table">Forks</li>
+        </ul>
+        
+        
 
         <script>
         var app = angular.module('main', ['ngSocial']).
@@ -29,7 +51,6 @@
         
         })
         </script>
-
     </div>
 
 

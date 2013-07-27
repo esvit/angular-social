@@ -1,29 +1,30 @@
-.ng-social-button_github,
-.ng-social-button_github:link,
-.ng-social-button_github:visited {
-	padding-left:19px;
-	background:#e6e6e6;
-	.linear-gradient(#fafafa, #eaeaea);
-	color:#555;
-	border-color:#d4d4d4;
-	border-bottom-color:#bcbcbc;
-	text-decoration:none;
-}
-.ng-social-button_github:hover {
-	background:#efefef;
-	.linear-gradient(#fff, #f0f0f0);
-	color:#444;
-	border-color:#d4d4d4;
-	border-bottom-color:#bcbcbc;
-}
-.ng-social-icon_github {
-	background-image:url('github.png');
-	background-position:3px 3px;
-}
-.ng-social-counter_github {
-	background:#fafafa;
-	border-color:#d4d4d4;
-}
-.ng-social-counter_github:after {
-	border-right-color:#fafafa;
+/* GitHub */
+.ng-social-github, .ng-social-github-forks {
+    @btn-color: #e6e6e6;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(#fafafa, #eaeaea);
+        color:#555;
+        border-color: darken(@btn-color, 10%);
+
+        &:hover {
+            border-color: darken(@btn-color, 10%);
+            .linear-gradient(#fff, #f0f0f0);
+            color: #444;
+        }
+    }
+    .ng-social-icon {
+        background-image:url('github.png');
+        background-position:3px 3px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: darken(@btn-color, 10%);
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
 }
