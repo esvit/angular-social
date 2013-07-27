@@ -2,6 +2,8 @@ Angular Social
 ==============
 Code licensed under New BSD License.
 
+Example you can see at this page: http://esvit.github.io/ng-table/
+
 Using:
 
 ```
