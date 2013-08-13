@@ -40,7 +40,7 @@ module.exports = (grunt) ->
                 dest: 'angular-social.src.js'
             less:
                 src: ['src/styles/*.less']
-                dest: '.temp/angular-social.less'
+                dest: 'angular-social.less'
 
         imageEmbed:
             css:
@@ -51,7 +51,7 @@ module.exports = (grunt) ->
         less:
             css:
                 files:
-                    '.temp/angular-social.css': '.temp/angular-social.less'
+                    '.temp/angular-social.css': 'angular-social.less'
 
         cssmin:
             css:

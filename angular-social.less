@@ -1,0 +1,445 @@
+.linear-gradient(@startColor: #555, @endColor: #333) {
+    background-color: mix(@startColor, @endColor, 60%);
+    background-image: -moz-linear-gradient(@startColor, @endColor); // FF 3.6+
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), to(@endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(@startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(@startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(to bottom, @startColor, @endColor); // Standard, IE10
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@startColor),argb(@endColor))); // IE9 and down
+}
+
+.ng-social,
+.ng-social-_widget {
+	display:inline-block;
+	vertical-align:middle;
+	line-height:20px;
+	text-indent:0;
+	padding:0;
+	border:0;
+	word-spacing:0;
+	font-size:14px;
+	*zoom:1;
+	*display:inline;
+}
+
+.ng-social {
+	margin: 0;
+	line-height:26px;
+	list-style:none;
+
+	li {
+		display:inline-block;
+        margin:0 5px;
+		*zoom:1;
+		*display:inline;
+	}
+	&_vertical li {
+		display:block;
+	}
+	&__widget {
+		display:inline-block;
+		position:relative;
+		margin:3px;
+		white-space:nowrap;
+	}
+	&__widget:before {
+		display:none;  // Remove nice bullets
+	}
+
+	&-button,
+	&-counter,
+	&-balloon,
+	&-balloon__code {
+		font-family: Tahoma, sans-serif;
+		font-size: 12px;
+	}
+
+	&-button,
+	&-counter {
+		display:inline-block;
+		*display:inline;
+		*float:left;
+		margin:0;
+		line-height:18px;
+		border-width:1px;
+		border-style:solid;
+		border-radius:3px;
+		outline:0;
+	}
+
+	&-button {
+		position:relative;
+		padding:1px 10px 1px 20px;
+		font-weight:bold;
+		//text-shadow:0 1px 0 hsla(0,0%,100%,.6);
+		box-shadow:0 1px 1px hsla(0,0%,0%,.05);
+		transition:border .1s ease-in-out, color .2s ease-in-out;
+		cursor:pointer;
+		user-select:none;
+		
+		// Prevent layout breaking without labels
+		&:before {
+			content:"";
+			display:inline-block;
+		}
+        &:hover {
+            text-decoration: none;
+        }
+	}
+
+	&-icon {
+		position:absolute;
+		top:0;
+		left:0;
+		width:20px;
+		height:20px;
+		background-repeat:no-repeat;
+	}
+
+	&-counter {
+        position:relative;
+        margin-left: -6px;
+        padding:1px 6px;
+        font-weight:normal;
+        border-radius:0 3px 3px 0;
+        color:#666;
+        cursor:default;
+
+        &:before,
+        &:after {
+            content:"";
+            position:absolute;
+            width:0;
+            height:0;
+        }
+        &:before {
+            top:4px;
+            left:-6px;
+            border:6px inset transparent;  // inset fixes strange artefacts in Firefox
+            border-left:0;
+            border-right:6px solid;
+            border-right-color:inherit;
+            opacity:.7;
+        }
+        &:after {
+            top:5px;
+            left:-4px;
+            border:5px inset transparent;  // inset fixes strange artefacts in Firefox
+            border-left:0;
+            border-right:5px solid;
+        }
+    }
+
+    &-close {
+        position:absolute;
+        right:0;
+        top:0;
+        padding:2px 4px;
+        font:16px Verdana, Geneva, Tahoma, sans-serif;
+        color:#999;
+        cursor:pointer;
+
+        &:hover {
+            color:#111;
+        }
+        &:before {
+            display:none;  // Remove nice bullets
+        }
+    }
+
+	// Vertical mode
+	&_vertical {
+		margin:-6px -4px;
+
+		.ng-social-widget {
+			display:block;
+			margin:6px 4px;
+		}
+	}
+
+	// Single button mode
+	&_single-w {
+		position:relative;
+		display:inline-block;
+	}
+	&_single {
+		position:absolute;
+		display:none;
+		top:-6px;
+		left:-6px;
+		padding:6px 6px 4px;
+		background:#fff;
+		text-align:left;
+		box-shadow:0 0 15px hsla(0,0%,0%,.3);
+		z-index:99999;
+	}
+	&_single &__widget:first-of-type {
+		margin-right:14px;  // Prevent collapse of widget and close button
+	}
+}
+/* Single button */
+.ng-social-button_single {
+	position:relative;
+	padding-left:19px;
+	background:#e2e2e2;
+	.linear-gradient(#f7f7f7, #e2e2e2);
+	color:#444;
+	border-color:#ccc;
+	border-color:hsla(0,0%,70%,.8);
+	border-bottom-color:hsla(0,0%,60%,.8);
+}
+.ng-social-button_single:hover {
+	background:#f4f4f4;
+	.linear-gradient(#f0f0f0, #cfcfcf);
+	color:#222;
+	border-color:#bbb;
+	border-bottom-color:#9f9f9f;
+}
+.ng-social-icon_single {
+	background-image:url('single.png');
+	background-position:2px 3px;
+}
+.ng-social-counter_single {
+	background:#f6f6f6;
+	border-color:#ddd;
+}
+.ng-social-counter_single:after {
+	border-right-color:#f6f6f6;
+}
+/* Facebook */
+.ng-social-facebook {
+    @btn-color: #3b5998;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(lighten(@btn-color, 10%), @btn-color);
+        color:#fff;
+        border-color: darken(@btn-color, 20%);
+
+        &:hover {
+          border-color: darken(@btn-color, 10%);
+          .linear-gradient(@btn-color, darken(@btn-color, 10%));
+        }
+    }
+    .ng-social-icon {
+        background-image:url('facebook.png');
+        background-position:3px 3px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: @btn-color;
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
+}
+/* Twitter */
+.ng-social-twitter {
+  @btn-color: #d5e6ef;
+
+  .ng-social-button {
+    padding-left:19px;
+    background: @btn-color;
+    .linear-gradient(lighten(@btn-color, 10%), @btn-color);
+    color:#186487;
+    border-color: #a4cce5;
+
+    &:hover {
+      border-color:#9cbbcf;
+      .linear-gradient(#f2f8fc, #bfdfed);
+      color:#0b3752;
+    }
+  }
+  .ng-social-icon {
+    background-image:url('twitter.png');
+    background-position:3px 5px;
+  }
+  .ng-social-counter {
+    background: mix(@btn-color, #fff, 10%);
+    border-color: #a4cce5;
+
+    &:after {
+      border-right-color: mix(@btn-color, #fff, 10%);
+    }
+  }
+}
+/* Google+ */
+.ng-social-google-plus {
+  @btn-color: #e4e4e4;
+
+  .ng-social-button {
+    padding-left:19px;
+    background:#e4e4e4;
+    .linear-gradient(#f5f5f5, #e4e4e4);
+    color:#cd4427;
+    border-color: #bbb;
+
+    &:hover {
+      background:#f4f4f4;
+      .linear-gradient(#f9f9f9, #f0f0f0);
+      color:#cd4427;
+      border-color:#ddd;
+    }
+  }
+  .ng-social-icon {
+    background-image:url('googleplus.png');
+    background-position:0 6px;
+  }
+  .ng-social-counter {
+    background: mix(@btn-color, #fff, 10%);
+    border-color: @btn-color;
+
+    &:after {
+      border-right-color: mix(@btn-color, #fff, 10%);
+    }
+  }
+}
+/* Vkontakte */
+.ng-social-vk {
+  @btn-color: #436f96;
+
+  .ng-social-button {
+    padding-left:19px;
+    background: @btn-color;
+    .linear-gradient(lighten(@btn-color, 10%), @btn-color);
+    color:#fff;
+    border-color: darken(@btn-color, 20%);
+
+    &:hover {
+      border-color: darken(@btn-color, 10%);
+      .linear-gradient(@btn-color, darken(@btn-color, 10%));
+    }
+  }
+  .ng-social-icon {
+    background-image:url('vkontakte.png');
+    background-position:1px 2px;
+  }
+  .ng-social-counter {
+    background: mix(@btn-color, #fff, 10%);
+    border-color: @btn-color;
+
+    &:after {
+      border-right-color: mix(@btn-color, #fff, 10%);
+    }
+  }
+}
+/* Odnoklassniki */
+.ng-social-odnoklassniki {
+    @btn-color: #f6900b;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(#f6bb6d, #f6900b);
+        color:#fff;
+        border-color: darken(@btn-color, 10%);
+
+        &:hover {
+            border-color: darken(@btn-color, 10%);
+            .linear-gradient(#fbcc5a, #f69a21);
+        }
+    }
+    .ng-social-icon {
+        background-image:url('odnoklassniki.png');
+        background-position:4px 3px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: darken(@btn-color, 10%);
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
+}
+/* Mail.ru */
+.ng-social-mailru {
+    @btn-color: #004584;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(#5d90ba, #004584);
+        color:#fff;
+        border-color: darken(@btn-color, 10%);
+
+        &:hover {
+            border-color: darken(@btn-color, 10%);
+            .linear-gradient(#618cae, #001e5d);
+        }
+    }
+    .ng-social-icon {
+        background-image:url('mailru.png');
+        background-position: 4px 3px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: darken(@btn-color, 10%);
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
+}
+/* Pinterest */
+.ng-social-pinterest {
+    @btn-color: #eee;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(#fefefe, #d3d3d3);
+        color:hsl(355,77%,44%);
+        border-color: darken(@btn-color, 10%);
+
+        &:hover {
+            border-color: darken(@btn-color, 10%);
+            .linear-gradient(#fff, #d9d9d9);
+        }
+    }
+    .ng-social-icon {
+        background-image:url('pinterest.png');
+        background-position:2px 1px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: darken(@btn-color, 10%);
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
+}
+/* GitHub */
+.ng-social-github, .ng-social-github-forks {
+    @btn-color: #e6e6e6;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(#fafafa, #eaeaea);
+        color:#555;
+        border-color: darken(@btn-color, 10%);
+
+        &:hover {
+            border-color: darken(@btn-color, 10%);
+            .linear-gradient(#fff, #f0f0f0);
+            color: #444;
+        }
+    }
+    .ng-social-icon {
+        background-image:url('github.png');
+        background-position:3px 3px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: darken(@btn-color, 10%);
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
+}
