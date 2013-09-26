@@ -28,8 +28,8 @@
 
         <ul ng-social-buttons
              data-url="'http://news.mistinfo.com/'"
-             data-title="'test'"
-             data-description="'test2'"
+             data-title="current_title"
+             data-description="'{{ current_description }}'"
              data-image="'http://s3.mistinfo.com/32/d8/32d8eab76f4c242f665bda66b5edc6c5.jpg'">
             <li>Share:</li>
             <li class="ng-social-facebook">Facebook</li>
@@ -48,7 +48,8 @@
         <script>
         var app = angular.module('main', ['ngSocial']).
         controller('DemoCtrl', function($scope) {
-        
+            $scope.current_title = 'Test';
+            $scope.current_description = 'Test description';
         })
         </script>
     </div>

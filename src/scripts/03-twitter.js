@@ -35,6 +35,7 @@ angular.module("ngSocial").directive('ngSocialTwitter', function() {
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-twitter');
             if (!ctrl) {
                 return;
             }

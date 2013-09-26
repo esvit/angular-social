@@ -32,6 +32,7 @@ angular.module("ngSocial").directive('ngSocialMailru', function() {
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-mailru');
             if (!ctrl) {
                 return;
             }

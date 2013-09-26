@@ -26,6 +26,7 @@ angular.module("ngSocial").directive('ngSocialGithub', function() {
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-github');
             if (!ctrl) {
                 return;
             }

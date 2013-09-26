@@ -32,6 +32,7 @@ angular.module("ngSocial").directive('ngSocialGooglePlus', function() {
             );*/
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-google-plus');
             if (!ctrl) {
                 return;
             }

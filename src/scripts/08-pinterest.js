@@ -30,6 +30,7 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-pinterest');
             if (!ctrl) {
                 return;
             }

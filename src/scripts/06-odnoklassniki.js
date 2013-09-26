@@ -30,6 +30,7 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-odnoklassniki');
             if (!ctrl) {
                 return;
             }

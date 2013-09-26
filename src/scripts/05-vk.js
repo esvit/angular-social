@@ -42,6 +42,7 @@ angular.module("ngSocial").directive('ngSocialVk', function() {
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-vk');
             if (!ctrl) {
                 return;
             }
