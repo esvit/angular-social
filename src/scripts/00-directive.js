@@ -96,10 +96,6 @@ angular.module("ngSocial", [])
             return ctrl;
         }],
         link: function(scope, element, attrs) {
-            scope.$watch('title', function(value) {
-                console.info(value);
-
-            });
         }
     };
   }
