@@ -8,7 +8,7 @@ function template(tmpl, context, filter) {
 }
 
 angular.module("ngSocial", [])
-       .directive("ngSocialButtons", ["$compile", "$q", "$parse", "$http", function($compile, $q, $parse, $http) {
+       .directive("ngSocialButtons", ["$compile", "$q", "$parse", "$http", "$location", function($compile, $q, $parse, $http, $location) {
     return {
         restrict: "A",
         scope: {
@@ -21,6 +21,9 @@ angular.module("ngSocial", [])
         transclude: true,
         template: '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>',
         controller: ["$scope", "$q", "$http", function($scope, $q, $http) {
+            var getUrl = function() {
+                return $scope.url || $location.absUrl();
+            };
             var ctrl = {
                 init: function(scope, element, options) {
                     if (options.counter) {
@@ -30,7 +33,7 @@ angular.module("ngSocial", [])
                 link: function(options) {
                     options = options || {};
                     var urlOptions = options.urlOptions || {};
-                    urlOptions.url = $scope.url;
+                    urlOptions.url = getUrl();
                     urlOptions.title = $scope.title;
                     urlOptions.image = $scope.image;
                     urlOptions.description = $scope.description || "";
@@ -73,7 +76,7 @@ angular.module("ngSocial", [])
                 getCount: function(options) {
                     var def = $q.defer();
                     var urlOptions = options.urlOptions || {};
-                    urlOptions.url = $scope.url;
+                    urlOptions.url = getUrl();
                     urlOptions.title = $scope.title;
                     var url = ctrl.makeUrl(options.counter.url, urlOptions);
                     if (options.counter.get) {
