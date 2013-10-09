@@ -1,17 +1,19 @@
-app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
+'use strict';
+
+app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     'use strict';
 
     var options = {
         counter: {
-            url: '{proxy}?url={url}&type=google-plus&callback=JSON_CALLBACK',
-            getNumber: function(data) {
+            url: '{proxy}?url={url}&type=stumbleupon&callback=JSON_CALLBACK',
+            getNumber: function (data) {
                 return data.count;
             }
         },
         popup: {
-            url: 'https://plus.google.com/share?url={url}',
-            width: 700,
-            height: 500
+            url: 'http://www.stumbleupon.com/submit?url={url}&title={title}',
+            width: 800,
+            height: 600
         }
     };
     return {
@@ -27,7 +29,7 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
                     </a> \
                     <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
                    </li>',
-        link: function(scope, element, attrs, ctrl) {
+        link: function (scope, element, attrs, ctrl) {
             element.addClass('ng-social-google-plus');
             if (!ctrl) {
                 return;

@@ -1,13 +1,14 @@
 /* Google+ */
 .ng-social-google-plus {
   @btn-color: #e4e4e4;
+  @border-color: #bbb;
 
   .ng-social-button {
     padding-left:19px;
     background:#e4e4e4;
     .linear-gradient(#f5f5f5, #e4e4e4);
     color:#cd4427;
-    border-color: #bbb;
+    border-color: @border-color;
 
     &:hover {
       background:#f4f4f4;
@@ -17,12 +18,12 @@
     }
   }
   .ng-social-icon {
-    background-image:url('googleplus.png');
+    background-image:url('images/googleplus.png');
     background-position:0 6px;
   }
   .ng-social-counter {
     background: mix(@btn-color, #fff, 10%);
-    border-color: @btn-color;
+    border-color: @border-color;
 
     &:after {
       border-right-color: mix(@btn-color, #fff, 10%);

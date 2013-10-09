@@ -44,14 +44,14 @@ module.exports = (grunt) ->
 
         imageEmbed:
             css:
-                src: [ ".temp/angular-social.css" ]
+                src: [ "angular-social.css" ]
                 dest: "angular-social.css"
-                baseDir: '.temp/'
+                baseDir: './'
 
         less:
             css:
                 files:
-                    '.temp/angular-social.css': 'angular-social.less'
+                    'angular-social.css': 'angular-social.less'
 
         cssmin:
             css:

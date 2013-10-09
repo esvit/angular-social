@@ -1,0 +1,151 @@
+.ng-social,
+.ng-social-_widget {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 20px;
+  text-indent: 0;
+  padding: 0;
+  border: 0;
+  word-spacing: 0;
+  font-size: 14px;
+  *zoom: 1;
+  *display: inline;
+}
+.ng-social {
+  margin: 0;
+  line-height: 26px;
+  list-style: none;
+}
+.ng-social li {
+  display: inline-block;
+  margin: 0 5px;
+  *zoom: 1;
+  *display: inline;
+}
+.ng-social_vertical li {
+  display: block;
+}
+.ng-social__widget {
+  display: inline-block;
+  position: relative;
+  margin: 3px;
+  white-space: nowrap;
+}
+.ng-social__widget:before {
+  display: none;
+}
+.ng-social-button,
+.ng-social-counter,
+.ng-social-balloon,
+.ng-social-balloon__code {
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+}
+.ng-social-button,
+.ng-social-counter {
+  display: inline-block;
+  *display: inline;
+  *float: left;
+  margin: 0;
+  line-height: 18px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
+  outline: 0;
+}
+.ng-social-button {
+  position: relative;
+  padding: 1px 10px 1px 20px;
+  font-weight: bold;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  transition: border 0.1s ease-in-out, color 0.2s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+}
+.ng-social-button:before {
+  content: "";
+  display: inline-block;
+}
+.ng-social-button:hover {
+  text-decoration: none;
+}
+.ng-social-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
+.ng-social-counter {
+  position: relative;
+  margin-left: -6px;
+  padding: 1px 6px;
+  font-weight: normal;
+  border-radius: 0 3px 3px 0;
+  color: #666;
+  cursor: default;
+}
+.ng-social-counter:before,
+.ng-social-counter:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.ng-social-counter:before {
+  top: 4px;
+  left: -6px;
+  border: 6px inset transparent;
+  border-left: 0;
+  border-right: 6px solid;
+  border-right-color: inherit;
+  opacity: .7;
+}
+.ng-social-counter:after {
+  top: 5px;
+  left: -4px;
+  border: 5px inset transparent;
+  border-left: 0;
+  border-right: 5px solid;
+}
+.ng-social-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 2px 4px;
+  font: 16px Verdana, Geneva, Tahoma, sans-serif;
+  color: #999;
+  cursor: pointer;
+}
+.ng-social-close:hover {
+  color: #111;
+}
+.ng-social-close:before {
+  display: none;
+}
+.ng-social_vertical {
+  margin: -6px -4px;
+}
+.ng-social_vertical .ng-social-widget {
+  display: block;
+  margin: 6px 4px;
+}
+.ng-social_single-w {
+  position: relative;
+  display: inline-block;
+}
+.ng-social_single {
+  position: absolute;
+  display: none;
+  top: -6px;
+  left: -6px;
+  padding: 6px 6px 4px;
+  background: #fff;
+  text-align: left;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  z-index: 99999;
+}
+.ng-social_single .ng-social__widget:first-of-type {
+  margin-right: 14px;
+}

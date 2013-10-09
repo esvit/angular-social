@@ -1,0 +1,5 @@
+NameError: .linear-gradient is undefined in C:\Users\esvit\Documents\GitHub\angular-social\src\styles\05-vk.less on line 8, column 5:
+7     background: @btn-color;
+8     .linear-gradient(lighten(@btn-color, 10%), @btn-color);
+9     color:#fff;
+

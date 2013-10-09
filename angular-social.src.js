@@ -1,10 +1,119 @@
-'use strict';function template(tmpl, context, filter) {    return tmpl.replace(/\{([^\}]+)\}/g, function(m, key) {        // If key don't exists in the context we should keep template tag as is        return key in context ? (filter ? filter(context[key]) : context[key]) : m;    });}angular.module("ngSocial", [])       .directive("ngSocialButtons", ["$compile", "$q", "$parse", "$http", function($compile, $q, $parse, $http) {    return {        restrict: "A",        scope: {            'url': '=',            'title': '=',            'description': '=',            'image': '='        },        replace: true,        transclude: true,        template: '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>',        controller: ["$scope", "$q", "$http", function($scope, $q, $http) {            var ctrl = {                init: function(scope, element, options) {                    if (options.counter) {                        scope.count = ctrl.getCount(scope.options);                    }                },                link: function(options) {                    options = options || {};                    var urlOptions = options.urlOptions || {};                    urlOptions.url = $scope.url;                    urlOptions.title = $scope.title;                    urlOptions.image = $scope.image;                    urlOptions.description = $scope.description || "";                    return ctrl.makeUrl(options.clickUrl || options.popup.url, urlOptions);                },                clickShare: function(e, options) {                    if (e.shiftKey || e.ctrlKey) {                        return;                    }                    e.preventDefault();                    var process = true;                    if (angular.isFunction(options.click)) {                        process = options.click.call(this, options);                    }                    if (process) {                        var url = ctrl.link(options);                        ctrl.openPopup(url, options.popup);                    }                },                openPopup: function(url, params) {                    var left = Math.round(screen.width/2 - params.width/2),                        top = 0;                    if (screen.height > params.height) {                        top = Math.round(screen.height/3 - params.height/2);                    }                    var win = window.open(                        url,                        'sl_' + this.service,                        'left=' + left + ',top=' + top + ',' +                        'width=' + params.width + ',height=' + params.height + ',personalbar=0,toolbar=0,scrollbars=1,resizable=1'                    );                    if (win) {                        win.focus();                    } else {                        location.href = url;                    }                },                getCount: function(options) {                    var def = $q.defer();                    var urlOptions = options.urlOptions || {};                    urlOptions.url = $scope.url;                    urlOptions.title = $scope.title;                    var url = ctrl.makeUrl(options.counter.url, urlOptions);                    if (options.counter.get) {                        options.counter.get(url, def, $http);                    } else {                        $http.jsonp(url).success(function(res) {                            if (options.counter.getNumber) {                                def.resolve(options.counter.getNumber(res));                            } else {                                def.resolve(res);                            }                        });                    }                    return def.promise;                },                makeUrl: function(url, context) {                    return template(url, context, encodeURIComponent);                }            };            return ctrl;        }],        link: function(scope, element, attrs) {            scope.$watch('title', function(value) {                console.info(value);            });        }    };  }]);
-'use strict';
+function template(tmpl, context, filter) {
+    'use strict';
 
-angular.module("ngSocial").directive('ngSocialFacebook', function() {
+    return tmpl.replace(/\{([^\}]+)\}/g, function (m, key) {
+        // If key don't exists in the context we should keep template tag as is
+        return key in context ? (filter ? filter(context[key]) : context[key]) : m;
+    });
+}
+
+var app = angular.module('ngSocial', []);
+
+app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$location',
+    function ($compile, $q, $parse, $http, $location) {
+        'use strict';
+
+        return {
+            restrict: 'A',
+            scope: {
+                'url': '=',
+                'title': '=',
+                'description': '=',
+                'image': '='
+            },
+            replace: true,
+            transclude: true,
+            template: '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>',
+            controller: ['$scope', '$q', '$http', function ($scope, $q, $http) {
+                var getUrl = function () {
+                    return $scope.url || $location.absUrl();
+                };
+                var ctrl = {
+                    init: function (scope, element, options) {
+                        if (options.counter) {
+                            scope.count = ctrl.getCount(scope.options);
+                        }
+                    },
+                    link: function (options) {
+                        options = options || {};
+                        var urlOptions = options.urlOptions || {};
+                        urlOptions.url = getUrl();
+                        urlOptions.title = $scope.title;
+                        urlOptions.image = $scope.image;
+                        urlOptions.description = $scope.description || '';
+                        return ctrl.makeUrl(options.clickUrl || options.popup.url, urlOptions);
+                    },
+                    clickShare: function (e, options) {
+                        if (e.shiftKey || e.ctrlKey) {
+                            return;
+                        }
+                        e.preventDefault();
+
+                        var process = true;
+                        if (angular.isFunction(options.click)) {
+                            process = options.click.call(this, options);
+                        }
+                        if (process) {
+                            var url = ctrl.link(options);
+                            ctrl.openPopup(url, options.popup);
+                        }
+                    },
+                    openPopup: function (url, params) {
+                        var left = Math.round(screen.width / 2 - params.width / 2),
+                            top = 0;
+                        if (screen.height > params.height) {
+                            top = Math.round(screen.height / 3 - params.height / 2);
+                        }
+
+                        var win = window.open(
+                            url,
+                            'sl_' + this.service,
+                            'left=' + left + ',top=' + top + ',' +
+                            'width=' + params.width + ',height=' + params.height +
+                            ',personalbar=0,toolbar=0,scrollbars=1,resizable=1'
+                        );
+                        if (win) {
+                            win.focus();
+                        } else {
+                            location.href = url;
+                        }
+                    },
+                    getCount: function (options) {
+                        var def = $q.defer();
+                        var urlOptions = options.urlOptions || {};
+                        urlOptions.url = getUrl();
+                        urlOptions.title = $scope.title;
+                        var url = ctrl.makeUrl(options.counter.url, urlOptions);
+                        if (options.counter.get) {
+                            options.counter.get(url, def, $http);
+                        } else {
+                            $http.jsonp(url).success(function (res) {
+                                if (options.counter.getNumber) {
+                                    def.resolve(options.counter.getNumber(res));
+                                } else {
+                                    def.resolve(res);
+                                }
+                            });
+                        }
+                        return def.promise;
+                    },
+                    makeUrl: function (url, context) {
+                        return template(url, context, encodeURIComponent);
+                    }
+                };
+                return ctrl;
+            }]
+        };
+    }
+    ]);
+
+app.directive('ngSocialFacebook', function() {
+    'use strict';
+
     var options = {
         counter: {
-            url: 'http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22&callback=JSON_CALLBACK',
+            url: 'http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
+                 '&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data[0].total_count;
             }
@@ -21,15 +130,14 @@ angular.module("ngSocial").directive('ngSocialFacebook', function() {
         scope: true,
         replace: true,
         transclude: true,
-        template: '<li> \
-                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
-                        <span class="ng-social-icon"></span> \
-                        <span class="ng-social-text" ng-transclude></span> \
-                    </a> \
-                    <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
-                   </li>',
-        controller: function($scope) {
-        },
+        template: '<li>' +
+                    '<a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)"' +
+                        ' class="ng-social-button">' +
+                        '<span class="ng-social-icon"></span>' +
+                        '<span class="ng-social-text" ng-transclude></span>' +
+                    '</a>' +
+                    '<span ng-show="count" class="ng-social-counter">{{ count }}</span>' +
+                   '</li>',
         link: function(scope, element, attrs, ctrl) {
             element.addClass('ng-social-facebook');
             if (!ctrl) {
@@ -39,11 +147,11 @@ angular.module("ngSocial").directive('ngSocialFacebook', function() {
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
-    }
+    };
 });
-'use strict';
+app.directive('ngSocialTwitter', function() {
+    'use strict';
 
-angular.module("ngSocial").directive('ngSocialTwitter', function() {
     var options = {
         counter: {
             url: 'http://urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
@@ -88,10 +196,16 @@ angular.module("ngSocial").directive('ngSocialTwitter', function() {
         }
     }
 });
-'use strict';
+app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
+    'use strict';
 
-angular.module("ngSocial").directive('ngSocialGooglePlus', function() {
     var options = {
+        counter: {
+            url: '{proxy}?url={url}&type=google-plus&callback=JSON_CALLBACK',
+            getNumber: function(data) {
+                return data.count;
+            }
+        },
         popup: {
             url: 'https://plus.google.com/share?url={url}',
             width: 700,
@@ -111,30 +225,23 @@ angular.module("ngSocial").directive('ngSocialGooglePlus', function() {
                     </a> \
                     <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
                    </li>',
-        controller: function($scope, $http) {
-            /*var url = 'https://plusone.google.com/_/+1/fastbutton?url=' + encodeURIComponent('http://news.mistinfo.com/');
-            $.get(url, function (data) { console.info(data);
-                    var aggregate = $('#aggregateCount', data).html(),
-                        exactMatch = $('script', data).html().match('\\s*c\\s*:\\s*(\\d+)');
-
-                    $scope.count = exactMatch ? exactMatch[1] + ' (' + aggregate + ')' : aggregate;
-                }
-            );*/
-        },
         link: function(scope, element, attrs, ctrl) {
             element.addClass('ng-social-google-plus');
             if (!ctrl) {
                 return;
             }
+            var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
+            options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
-    }
-});
-'use strict';
+    };
+}]);
 
-angular.module("ngSocial").directive('ngSocialVk', function() {
+app.directive('ngSocialVk', function() {
+    'use strict';
+
     var options = {
         counter:{
             url: 'http://vkontakte.ru/share.php?act=count&url={url}&index={index}',
@@ -398,6 +505,51 @@ angular.module("ngSocial").directive('ngSocialGithub', function() {
         }
     }
 });
+'use strict';
+
+app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
+    'use strict';
+
+    var options = {
+        counter: {
+            url: '{proxy}?url={url}&type=stumbleupon&callback=JSON_CALLBACK',
+            getNumber: function (data) {
+                return data.count;
+            }
+        },
+        popup: {
+            url: 'https://plus.google.com/share?url={url}',
+            width: 700,
+            height: 500
+        }
+    };
+    return {
+        restrict: 'C',
+        require: '^?ngSocialButtons',
+        scope: true,
+        replace: true,
+        transclude: true,
+        template: '<li> \
+                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
+                        <span class="ng-social-icon"></span> \
+                        <span class="ng-social-text" ng-transclude></span> \
+                    </a> \
+                    <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
+                   </li>',
+        link: function (scope, element, attrs, ctrl) {
+            element.addClass('ng-social-google-plus');
+            if (!ctrl) {
+                return;
+            }
+            var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
+            options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
+            scope.options = options;
+            scope.ctrl = ctrl;
+            ctrl.init(scope, element, options);
+        }
+    };
+}]);
+
 angular.module('ngSocial').run(['$templateCache', function ($templateCache) {
 	$templateCache.put('/views/buttons.html', '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>');
 }]);

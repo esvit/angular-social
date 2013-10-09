@@ -1,6 +1,6 @@
-'use strict';
+app.directive('ngSocialTwitter', function() {
+    'use strict';
 
-angular.module("ngSocial").directive('ngSocialTwitter', function() {
     var options = {
         counter: {
             url: 'http://urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',

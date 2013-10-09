@@ -1,6 +1,6 @@
-'use strict';
+app.directive('ngSocialVk', function() {
+    'use strict';
 
-angular.module("ngSocial").directive('ngSocialVk', function() {
     var options = {
         counter:{
             url: 'http://vkontakte.ru/share.php?act=count&url={url}&index={index}',

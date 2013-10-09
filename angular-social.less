@@ -72,7 +72,6 @@
 		position:relative;
 		padding:1px 10px 1px 20px;
 		font-weight:bold;
-		//text-shadow:0 1px 0 hsla(0,0%,100%,.6);
 		box-shadow:0 1px 1px hsla(0,0%,0%,.05);
 		transition:border .1s ease-in-out, color .2s ease-in-out;
 		cursor:pointer;
@@ -178,6 +177,7 @@
 		margin-right:14px;  // Prevent collapse of widget and close button
 	}
 }
+
 /* Single button */
 .ng-social-button_single {
 	position:relative;
@@ -197,7 +197,7 @@
 	border-bottom-color:#9f9f9f;
 }
 .ng-social-icon_single {
-	background-image:url('single.png');
+	background-image:url('images/single.png');
 	background-position:2px 3px;
 }
 .ng-social-counter_single {
@@ -224,7 +224,7 @@
         }
     }
     .ng-social-icon {
-        background-image:url('facebook.png');
+        background-image:url('images/facebook.png');
         background-position:3px 3px;
     }
     .ng-social-counter {
@@ -254,7 +254,7 @@
     }
   }
   .ng-social-icon {
-    background-image:url('twitter.png');
+    background-image:url('images/twitter.png');
     background-position:3px 5px;
   }
   .ng-social-counter {
@@ -269,13 +269,14 @@
 /* Google+ */
 .ng-social-google-plus {
   @btn-color: #e4e4e4;
+  @border-color: #bbb;
 
   .ng-social-button {
     padding-left:19px;
     background:#e4e4e4;
     .linear-gradient(#f5f5f5, #e4e4e4);
     color:#cd4427;
-    border-color: #bbb;
+    border-color: @border-color;
 
     &:hover {
       background:#f4f4f4;
@@ -285,12 +286,12 @@
     }
   }
   .ng-social-icon {
-    background-image:url('googleplus.png');
+    background-image:url('images/googleplus.png');
     background-position:0 6px;
   }
   .ng-social-counter {
     background: mix(@btn-color, #fff, 10%);
-    border-color: @btn-color;
+    border-color: @border-color;
 
     &:after {
       border-right-color: mix(@btn-color, #fff, 10%);
@@ -314,7 +315,7 @@
     }
   }
   .ng-social-icon {
-    background-image:url('vkontakte.png');
+    background-image:url('images/vkontakte.png');
     background-position:1px 2px;
   }
   .ng-social-counter {
@@ -343,7 +344,7 @@
         }
     }
     .ng-social-icon {
-        background-image:url('odnoklassniki.png');
+        background-image:url('images/odnoklassniki.png');
         background-position:4px 3px;
     }
     .ng-social-counter {
@@ -372,7 +373,7 @@
         }
     }
     .ng-social-icon {
-        background-image:url('mailru.png');
+        background-image:url('images/mailru.png');
         background-position: 4px 3px;
     }
     .ng-social-counter {
@@ -401,7 +402,7 @@
         }
     }
     .ng-social-icon {
-        background-image:url('pinterest.png');
+        background-image:url('images/pinterest.png');
         background-position:2px 1px;
     }
     .ng-social-counter {
@@ -431,8 +432,38 @@
         }
     }
     .ng-social-icon {
-        background-image:url('github.png');
+        background-image:url('images/github.png');
         background-position:3px 3px;
+    }
+    .ng-social-counter {
+        background: mix(@btn-color, #fff, 10%);
+        border-color: darken(@btn-color, 10%);
+
+        &:after {
+            border-right-color: mix(@btn-color, #fff, 10%);
+        }
+    }
+}
+/* StumbleUpon */
+.ng-social-stumbleupon {
+    @btn-color: #212121;
+
+    .ng-social-button {
+        padding-left:19px;
+        background: @btn-color;
+        .linear-gradient(#3d3d3d, #212121);
+        color:#fff;
+        border-color: darken(@btn-color, 10%);
+
+        &:hover {
+            border-color: darken(@btn-color, 10%);
+            .linear-gradient(lighten(#3d3d3d, 10%), lighten(#212121, 10%));
+            color: #fff;
+        }
+    }
+    .ng-social-icon {
+        background-image:url('images/10-stumbleupon.png');
+        background-position:1px 1px;
     }
     .ng-social-counter {
         background: mix(@btn-color, #fff, 10%);
