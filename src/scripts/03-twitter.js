@@ -17,6 +17,10 @@ app.directive('ngSocialTwitter', function() {
             // Add colon to improve readability
             if (!/[\.:\-–—]\s*$/.test(options.pageTitle)) options.pageTitle += ':';
             return true;
+        },
+        track: {
+            'name': 'twitter',
+            'action': 'tweet'
         }
     };
     return {

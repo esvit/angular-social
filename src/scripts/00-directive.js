@@ -49,6 +49,10 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         }
                         e.preventDefault();
 
+                        if (options.track && angular.isArray(_gaq)) {
+                            _gaq.push(['_trackSocial', options.track.name, options.track.action, $scope.url]);
+                        }
+
                         var process = true;
                         if (angular.isFunction(options.click)) {
                             process = options.click.call(this, options);

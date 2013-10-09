@@ -24,6 +24,10 @@ app.directive('ngSocialVk', function() {
             url: 'http://vk.com/share.php?url={url}&title={title}&description={description}&image={image}',
             width: 550,
             height: 330
+        },
+        track: {
+            'name': 'VKontakte',
+            'action': 'share'
         }
     };
     return {

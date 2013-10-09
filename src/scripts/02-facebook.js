@@ -13,6 +13,10 @@ app.directive('ngSocialFacebook', function() {
             url: 'http://www.facebook.com/sharer/sharer.php?u={url}',
             width: 600,
             height: 500
+        },
+        track: {
+            'name': 'facebook',
+            'action': 'send'
         }
     };
     return {

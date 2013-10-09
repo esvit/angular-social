@@ -49,6 +49,10 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         }
                         e.preventDefault();
 
+                        if (options.track && angular.isArray(_gaq)) {
+                            _gaq.push(['_trackSocial', options.track.name, options.track.action, $scope.url]);
+                        }
+
                         var process = true;
                         if (angular.isFunction(options.click)) {
                             process = options.click.call(this, options);
@@ -122,6 +126,10 @@ app.directive('ngSocialFacebook', function() {
             url: 'http://www.facebook.com/sharer/sharer.php?u={url}',
             width: 600,
             height: 500
+        },
+        track: {
+            'name': 'facebook',
+            'action': 'send'
         }
     };
     return {
@@ -168,6 +176,10 @@ app.directive('ngSocialTwitter', function() {
             // Add colon to improve readability
             if (!/[\.:\-–—]\s*$/.test(options.pageTitle)) options.pageTitle += ':';
             return true;
+        },
+        track: {
+            'name': 'twitter',
+            'action': 'tweet'
         }
     };
     return {
@@ -210,6 +222,10 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             url: 'https://plus.google.com/share?url={url}',
             width: 700,
             height: 500
+        },
+        track: {
+            'name': 'Google+',
+            'action': 'share'
         }
     };
     return {
@@ -265,6 +281,10 @@ app.directive('ngSocialVk', function() {
             url: 'http://vk.com/share.php?url={url}&title={title}&description={description}&image={image}',
             width: 550,
             height: 330
+        },
+        track: {
+            'name': 'VKontakte',
+            'action': 'share'
         }
     };
     return {
@@ -307,6 +327,10 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
             url: 'http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl={url}',
             width: 550,
             height: 360
+        },
+        track: {
+            'name': 'Odnoklassniki',
+            'action': 'share'
         }
     };
     return {
@@ -505,8 +529,6 @@ angular.module("ngSocial").directive('ngSocialGithub', function() {
         }
     }
 });
-'use strict';
-
 app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     'use strict';
 
@@ -521,6 +543,10 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             url: 'http://www.stumbleupon.com/submit?url={url}&title={title}',
             width: 800,
             height: 600
+        },
+        track: {
+            'name': 'StumbleUpon',
+            'action': 'share'
         }
     };
     return {
@@ -549,7 +575,6 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
         }
     };
 }]);
-
 angular.module('ngSocial').run(['$templateCache', function ($templateCache) {
 	$templateCache.put('/views/buttons.html', '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>');
 }]);

@@ -12,6 +12,10 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             url: 'https://plus.google.com/share?url={url}',
             width: 700,
             height: 500
+        },
+        track: {
+            'name': 'Google+',
+            'action': 'share'
         }
     };
     return {

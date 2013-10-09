@@ -12,6 +12,10 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
             url: 'http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl={url}',
             width: 550,
             height: 360
+        },
+        track: {
+            'name': 'Odnoklassniki',
+            'action': 'share'
         }
     };
     return {

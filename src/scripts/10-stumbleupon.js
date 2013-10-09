@@ -1,5 +1,3 @@
-'use strict';
-
 app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     'use strict';
 
@@ -14,6 +12,10 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             url: 'http://www.stumbleupon.com/submit?url={url}&title={title}',
             width: 800,
             height: 600
+        },
+        track: {
+            'name': 'StumbleUpon',
+            'action': 'share'
         }
     };
     return {
