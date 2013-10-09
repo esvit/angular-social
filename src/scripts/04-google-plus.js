@@ -21,16 +21,6 @@ angular.module("ngSocial").directive('ngSocialGooglePlus', function() {
                     </a> \
                     <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
                    </li>',
-        controller: function($scope, $http) {
-            /*var url = 'https://plusone.google.com/_/+1/fastbutton?url=' + encodeURIComponent('http://news.mistinfo.com/');
-            $.get(url, function (data) { console.info(data);
-                    var aggregate = $('#aggregateCount', data).html(),
-                        exactMatch = $('script', data).html().match('\\s*c\\s*:\\s*(\\d+)');
-
-                    $scope.count = exactMatch ? exactMatch[1] + ' (' + aggregate + ')' : aggregate;
-                }
-            );*/
-        },
         link: function(scope, element, attrs, ctrl) {
             element.addClass('ng-social-google-plus');
             if (!ctrl) {
