@@ -518,9 +518,9 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             }
         },
         popup: {
-            url: 'https://plus.google.com/share?url={url}',
-            width: 700,
-            height: 500
+            url: 'http://www.stumbleupon.com/submit?url={url}&title={title}',
+            width: 800,
+            height: 600
         }
     };
     return {
