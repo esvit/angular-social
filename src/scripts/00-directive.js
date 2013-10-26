@@ -31,7 +31,9 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                 var ctrl = {
                     init: function (scope, element, options) {
                         if (options.counter) {
-                            scope.count = ctrl.getCount(scope.options);
+                            ctrl.getCount(scope.options).then(function(count) {
+                                scope.count = count;
+                            });
                         }
                     },
                     link: function (options) {
@@ -49,7 +51,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         }
                         e.preventDefault();
 
-                        if (options.track && angular.isArray(_gaq)) {
+                        if (options.track && typeof _gaq != 'undefined' && angular.isArray(_gaq)) {
                             _gaq.push(['_trackSocial', options.track.name, options.track.action, $scope.url]);
                         }
 
