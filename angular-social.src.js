@@ -19,7 +19,8 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                 'url': '=',
                 'title': '=',
                 'description': '=',
-                'image': '='
+                'image': '=',
+                'showcounts': '='
             },
             replace: true,
             transclude: true,
@@ -89,17 +90,21 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         var urlOptions = options.urlOptions || {};
                         urlOptions.url = getUrl();
                         urlOptions.title = $scope.title;
-                        var url = ctrl.makeUrl(options.counter.url, urlOptions);
-                        if (options.counter.get) {
-                            options.counter.get(url, def, $http);
-                        } else {
-                            $http.jsonp(url).success(function (res) {
-                                if (options.counter.getNumber) {
-                                    def.resolve(options.counter.getNumber(res));
-                                } else {
-                                    def.resolve(res);
-                                }
-                            });
+                        var url = ctrl.makeUrl(options.counter.url, urlOptions),
+                            showcounts = angular.isUndefined($scope.showcounts) ? true : $scope.showcounts;
+
+                        if (showcounts) {
+                            if (options.counter.get) {
+                                options.counter.get(url, def, $http);
+                            } else {
+                                $http.jsonp(url).success(function (res) {
+                                    if (options.counter.getNumber) {
+                                        def.resolve(options.counter.getNumber(res));
+                                    } else {
+                                        def.resolve(res);
+                                    }
+                                });
+                            }
                         }
                         return def.promise;
                     },
