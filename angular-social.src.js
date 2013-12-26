@@ -17,7 +17,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
             restrict: 'A',
             scope: {
                 'url': '=',
-                'title': '=',
+                'title': '=',
                 'description': '=',
                 'image': '=',
                 'showcounts': '='
@@ -175,7 +175,7 @@ app.directive('ngSocialTwitter', function() {
             }
         },
         popup: {
-            url: 'http://twitter.com/intent/tweet?url={url}&text={title}',
+            url: 'https://twitter.com/intent/tweet?url={url}&text={title}',
             width: 600,
             height: 450
         },
