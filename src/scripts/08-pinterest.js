@@ -9,7 +9,7 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
             }
         },
         popup: {
-            url: 'http://pinterest.com/pin/create/button/?url={url}&description={title}',
+            url: 'http://pinterest.com/pin/create/button/?url={url}&description={title}&media={image}',
             width: 630,
             height: 270
         }
