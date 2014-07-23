@@ -17,7 +17,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
             restrict: 'A',
             scope: {
                 'url': '=',
-                'title': '=',
+                'title': '=',
                 'description': '=',
                 'image': '=',
                 'showcounts': '='
