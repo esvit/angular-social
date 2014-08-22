@@ -175,7 +175,7 @@ app.directive('ngSocialTwitter', function() {
             }
         },
         popup: {
-            url: 'https://twitter.com/intent/tweet?url={url}&text={title}',
+            url: 'http://twitter.com/intent/tweet?url={url}&text={title}',
             width: 600,
             height: 450
         },
@@ -218,23 +218,40 @@ app.directive('ngSocialTwitter', function() {
 app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     'use strict';
 
-    var options = {
-        counter: {
-            url: '{proxy}?url={url}&type=google-plus&callback=JSON_CALLBACK',
-            getNumber: function(data) {
-                return data.count;
+    var protocol = location.protocol === 'https:' ? 'https:' : 'http:',
+        options = {
+            counter: {
+                url: protocol === 'http:' ? 'http://share.yandex.ru/gpp.xml?url={url}' : undefined,
+                getNumber: function(data) {
+                    return data.count;
+                },
+                get: function(jsonUrl, deferred, $http) {
+                    if (options._) {
+                        deferred.reject();
+                        return;
+                    }
+
+                    if (!window.services) window.services = {};
+                    window.services.gplus = {
+                        cb: function(number) {
+                            options._.resolve(number);
+                        }
+                    };
+
+                    options._ = deferred;
+                    $http.jsonp(jsonUrl);
+                }
+            },
+            popup: {
+                url: 'https://plus.google.com/share?url={url}',
+                width: 700,
+                height: 500
+            },
+            track: {
+                'name': 'Google+',
+                'action': 'share'
             }
-        },
-        popup: {
-            url: 'https://plus.google.com/share?url={url}',
-            width: 700,
-            height: 500
-        },
-        track: {
-            'name': 'Google+',
-            'action': 'share'
-        }
-    };
+        };
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
@@ -253,8 +270,6 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             if (!ctrl) {
                 return;
             }
-            var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
-            options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
@@ -421,7 +436,7 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
             }
         },
         popup: {
-            url: 'http://pinterest.com/pin/create/button/?url={url}&description={title}',
+            url: 'http://pinterest.com/pin/create/button/?url={url}&description={title}&media={image}',
             width: 630,
             height: 270
         }
@@ -452,6 +467,7 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
         }
     }
 });
+
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialGithubForks', function() {
