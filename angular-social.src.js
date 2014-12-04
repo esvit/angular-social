@@ -28,16 +28,15 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
             controller: ['$scope', '$q', '$http', function ($scope, $q, $http) {
                 var getUrl = function () {
                     return $scope.url || $location.absUrl();
+                }, ctrl = this;
+                this.init = function (scope, element, options) {
+                    if (options.counter) {
+                        ctrl.getCount(scope.options).then(function (count) {
+                            scope.count = count;
+                        });
+                    }
                 };
-                var ctrl = {
-                    init: function (scope, element, options) {
-                        if (options.counter) {
-                            ctrl.getCount(scope.options).then(function(count) {
-                                scope.count = count;
-                            });
-                        }
-                    },
-                    link: function (options) {
+                this.link = function (options) {
                         options = options || {};
                         var urlOptions = options.urlOptions || {};
                         urlOptions.url = getUrl();
@@ -45,74 +44,73 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         urlOptions.image = $scope.image;
                         urlOptions.description = $scope.description || '';
                         return ctrl.makeUrl(options.clickUrl || options.popup.url, urlOptions);
-                    },
-                    clickShare: function (e, options) {
-                        if (e.shiftKey || e.ctrlKey) {
-                            return;
-                        }
-                        e.preventDefault();
+                };
+                this.clickShare = function (e, options) {
+                    if (e.shiftKey || e.ctrlKey) {
+                        return;
+                    }
+                    e.preventDefault();
 
-                        if (options.track && typeof _gaq != 'undefined' && angular.isArray(_gaq)) {
-                            _gaq.push(['_trackSocial', options.track.name, options.track.action, $scope.url]);
-                        }
+                    if (options.track && typeof _gaq != 'undefined' && angular.isArray(_gaq)) {
+                        _gaq.push(['_trackSocial', options.track.name, options.track.action, $scope.url]);
+                    }
 
-                        var process = true;
-                        if (angular.isFunction(options.click)) {
-                            process = options.click.call(this, options);
-                        }
-                        if (process) {
-                            var url = ctrl.link(options);
-                            ctrl.openPopup(url, options.popup);
-                        }
-                    },
-                    openPopup: function (url, params) {
-                        var left = Math.round(screen.width / 2 - params.width / 2),
-                            top = 0;
-                        if (screen.height > params.height) {
-                            top = Math.round(screen.height / 3 - params.height / 2);
-                        }
-
-                        var win = window.open(
-                            url,
-                            'sl_' + this.service,
-                            'left=' + left + ',top=' + top + ',' +
-                            'width=' + params.width + ',height=' + params.height +
-                            ',personalbar=0,toolbar=0,scrollbars=1,resizable=1'
-                        );
-                        if (win) {
-                            win.focus();
-                        } else {
-                            location.href = url;
-                        }
-                    },
-                    getCount: function (options) {
-                        var def = $q.defer();
-                        var urlOptions = options.urlOptions || {};
-                        urlOptions.url = getUrl();
-                        urlOptions.title = $scope.title;
-                        var url = ctrl.makeUrl(options.counter.url, urlOptions),
-                            showcounts = angular.isUndefined($scope.showcounts) ? true : $scope.showcounts;
-
-                        if (showcounts) {
-                            if (options.counter.get) {
-                                options.counter.get(url, def, $http);
-                            } else {
-                                $http.jsonp(url).success(function (res) {
-                                    if (options.counter.getNumber) {
-                                        def.resolve(options.counter.getNumber(res));
-                                    } else {
-                                        def.resolve(res);
-                                    }
-                                });
-                            }
-                        }
-                        return def.promise;
-                    },
-                    makeUrl: function (url, context) {
-                        return template(url, context, encodeURIComponent);
+                    var process = true;
+                    if (angular.isFunction(options.click)) {
+                        process = options.click.call(this, options);
+                    }
+                    if (process) {
+                        var url = ctrl.link(options);
+                        ctrl.openPopup(url, options.popup);
                     }
                 };
-                return ctrl;
+                this.openPopup = function (url, params) {
+                    var left = Math.round(screen.width / 2 - params.width / 2),
+                        top = 0;
+                    if (screen.height > params.height) {
+                        top = Math.round(screen.height / 3 - params.height / 2);
+                    }
+
+                    var win = window.open(
+                        url,
+                        'sl_' + this.service,
+                        'left=' + left + ',top=' + top + ',' +
+                        'width=' + params.width + ',height=' + params.height +
+                        ',personalbar=0,toolbar=0,scrollbars=1,resizable=1'
+                    );
+                    if (win) {
+                        win.focus();
+                    } else {
+                        location.href = url;
+                    }
+                };
+                this.getCount = function (options) {
+                    var def = $q.defer();
+                    var urlOptions = options.urlOptions || {};
+                    urlOptions.url = getUrl();
+                    urlOptions.title = $scope.title;
+                    var url = ctrl.makeUrl(options.counter.url, urlOptions),
+                        showcounts = angular.isUndefined($scope.showcounts) ? true : $scope.showcounts;
+
+                    if (showcounts) {
+                        if (options.counter.get) {
+                            options.counter.get(url, def, $http);
+                        } else {
+                            $http.jsonp(url).success(function (res) {
+                                if (options.counter.getNumber) {
+                                    def.resolve(options.counter.getNumber(res));
+                                } else {
+                                    def.resolve(res);
+                                }
+                            });
+                        }
+                    }
+                    return def.promise;
+                };
+                this.makeUrl = function (url, context) {
+                    return template(url, context, encodeURIComponent);
+                };
+                return this;
             }]
         };
     }
@@ -597,6 +595,43 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             }
             var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
             options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
+            scope.options = options;
+            scope.ctrl = ctrl;
+            ctrl.init(scope, element, options);
+        }
+    };
+}]);
+app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
+    'use strict';
+
+    var options = {
+        popup: {
+            url: 'http://share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
+            width: 800,
+            height: 600
+        },
+        track: {
+            'name': 'MoiKrug',
+            'action': 'share'
+        }
+    };
+    return {
+        restrict: 'C',
+        require: '^?ngSocialButtons',
+        scope: true,
+        replace: true,
+        transclude: true,
+        template: '<li> \
+                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
+                        <span class="ng-social-icon"></span> \
+                        <span class="ng-social-text" ng-transclude></span> \
+                    </a> \
+                   </li>',
+        link: function (scope, element, attrs, ctrl) {
+            element.addClass('ng-social-moi-krug');
+            if (!ctrl) {
+                return;
+            }
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);

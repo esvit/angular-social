@@ -1,0 +1,22 @@
+/* Мой круг */
+.ng-social-moi-krug {
+  @first-color: #afd0f0;
+  @second-color: #70b0e6;
+
+  .ng-social-button {
+    padding-left:19px;
+    background: @first-color;
+    .linear-gradient(@first-color, @second-color);
+    color:#fff;
+    border-color: darken(@second-color, 10%);
+
+    &:hover {
+      border-color: darken(@second-color, 10%);
+      .linear-gradient(@first-color, darken(@second-color, 10%));
+    }
+  }
+  .ng-social-icon {
+    background-image:url('images/moikrug.png');
+    background-position:3px 3px;
+  }
+}
