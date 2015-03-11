@@ -3,7 +3,7 @@
 angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
     var options = {
         counter: {
-            url: 'http://www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
+            url: '//www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }

@@ -3,7 +3,7 @@ app.directive('ngSocialTwitter', function() {
 
     var options = {
         counter: {
-            url: 'http://urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
