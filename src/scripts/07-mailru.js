@@ -3,7 +3,7 @@
 angular.module("ngSocial").directive('ngSocialMailru', function() {
     var options = {
         counter: {
-            url: 'http://connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
+            url: '//connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
             getNumber: function(data) {
                 for (var url in data) if (data.hasOwnProperty(url)) {
                     return data[url].shares;

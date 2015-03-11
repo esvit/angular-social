@@ -4,7 +4,7 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     var protocol = location.protocol === 'https:' ? 'https:' : 'http:',
         options = {
             counter: {
-                url: protocol === 'http:' ? 'http://share.yandex.ru/gpp.xml?url={url}' : undefined,
+                url: protocol === 'http:' ? '//share.yandex.ru/gpp.xml?url={url}' : undefined,
                 getNumber: function(data) {
                     return data.count;
                 },

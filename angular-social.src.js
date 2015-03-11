@@ -121,7 +121,7 @@ app.directive('ngSocialFacebook', function() {
 
     var options = {
         counter: {
-            url: 'http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
+            url: '//graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
                  '&callback=JSON_CALLBACK',
             getNumber: function(data) {
 				if (0 === data.data.length) {
@@ -172,7 +172,7 @@ app.directive('ngSocialTwitter', function() {
 
     var options = {
         counter: {
-            url: 'http://urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -218,13 +218,14 @@ app.directive('ngSocialTwitter', function() {
         }
     }
 });
+
 app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     'use strict';
 
     var protocol = location.protocol === 'https:' ? 'https:' : 'http:',
         options = {
             counter: {
-                url: protocol === 'http:' ? 'http://share.yandex.ru/gpp.xml?url={url}' : undefined,
+                url: protocol === 'http:' ? '//share.yandex.ru/gpp.xml?url={url}' : undefined,
                 getNumber: function(data) {
                     return data.count;
                 },
@@ -285,7 +286,7 @@ app.directive('ngSocialVk', function() {
 
     var options = {
         counter:{
-            url: 'http://vkontakte.ru/share.php?act=count&url={url}&index={index}',
+            url: '//vkontakte.ru/share.php?act=count&url={url}&index={index}',
             get: function(jsonUrl, deferred, $http) {
                 if (!options._) {
                     options._ = [];
@@ -338,12 +339,13 @@ app.directive('ngSocialVk', function() {
         }
     }
 });
+
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
     var options = {
         counter: {
-            url: 'http://www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
+            url: '//www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -384,12 +386,13 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
         }
     }
 });
+
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialMailru', function() {
     var options = {
         counter: {
-            url: 'http://connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
+            url: '//connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
             getNumber: function(data) {
                 for (var url in data) if (data.hasOwnProperty(url)) {
                     return data[url].shares;
@@ -428,12 +431,13 @@ angular.module("ngSocial").directive('ngSocialMailru', function() {
         }
     }
 });
+
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialPinterest', function() {
     var options = {
         counter: {
-            url: 'http://api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -476,7 +480,7 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
 angular.module("ngSocial").directive('ngSocialGithubForks', function() {
     var options = {
         counter: {
-            url: 'https://api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
+            url: '//api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data.forks_count;
             }
@@ -513,12 +517,13 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function() {
         }
     }
 });
+
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialGithub', function() {
     var options = {
         counter: {
-            url: 'https://api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
+            url: '//api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data.watchers_count;
             }
@@ -555,6 +560,7 @@ angular.module("ngSocial").directive('ngSocialGithub', function() {
         }
     }
 });
+
 app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     'use strict';
 
@@ -606,7 +612,7 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
 
     var options = {
         popup: {
-            url: 'http://share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
+            url: '//share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
             width: 800,
             height: 600
         },
@@ -638,6 +644,7 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
         }
     };
 }]);
+
 angular.module('ngSocial').run(['$templateCache', function ($templateCache) {
 	$templateCache.put('/views/buttons.html', '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>');
 }]);

@@ -3,7 +3,7 @@ app.directive('ngSocialFacebook', function() {
 
     var options = {
         counter: {
-            url: 'http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
+            url: '//graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
                  '&callback=JSON_CALLBACK',
             getNumber: function(data) {
 				if (0 === data.data.length) {

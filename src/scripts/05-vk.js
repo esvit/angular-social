@@ -3,7 +3,7 @@ app.directive('ngSocialVk', function() {
 
     var options = {
         counter:{
-            url: 'http://vkontakte.ru/share.php?act=count&url={url}&index={index}',
+            url: '//vkontakte.ru/share.php?act=count&url={url}&index={index}',
             get: function(jsonUrl, deferred, $http) {
                 if (!options._) {
                     options._ = [];
