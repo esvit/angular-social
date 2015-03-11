@@ -3,7 +3,7 @@
 angular.module("ngSocial").directive('ngSocialGithubForks', function() {
     var options = {
         counter: {
-            url: 'https://api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
+            url: '//api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data.forks_count;
             }

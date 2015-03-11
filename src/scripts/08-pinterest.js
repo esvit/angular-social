@@ -3,7 +3,7 @@
 angular.module("ngSocial").directive('ngSocialPinterest', function() {
     var options = {
         counter: {
-            url: 'http://api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
