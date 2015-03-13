@@ -1,0 +1,30 @@
+/* LinkedIn */
+.ng-social-linkedin {
+  @btn-color: #0077B5;
+  @border-color: #066094;
+
+  .ng-social-button {
+    padding-left:19px;
+    background: @btn-color;
+    color:#fff;
+    border-color: @border-color;
+
+    &:hover {
+      border-color: @border-color;
+      .linear-gradient(#0077B5, #0077B5);
+      //color:#0077B5;
+    }
+  }
+  .ng-social-icon {
+    background-image:url('images/linkedin.png');
+    background-position:3px 2px;
+  }
+  .ng-social-counter {
+    background: #fff;
+    border-color: @border-color;
+
+    &:after {
+      border-right-color: #fff;
+    }
+  }
+}
