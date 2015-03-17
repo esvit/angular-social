@@ -222,10 +222,9 @@ app.directive('ngSocialTwitter', function() {
 app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     'use strict';
 
-    var protocol = location.protocol === 'https:' ? 'https:' : 'http:',
-        options = {
+        var options = {
             counter: {
-                url: protocol === 'http:' ? '//share.yandex.ru/gpp.xml?url={url}' : undefined,
+                url: '//share.yandex.ru/gpp.xml?url={url}',
                 getNumber: function(data) {
                     return data.count;
                 },
