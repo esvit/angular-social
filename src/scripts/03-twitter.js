@@ -1,4 +1,4 @@
-app.directive('ngSocialTwitter', function() {
+app.directive('ngSocialTwitter', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -43,9 +43,13 @@ app.directive('ngSocialTwitter', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);

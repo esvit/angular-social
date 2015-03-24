@@ -40,9 +40,9 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         options = options || {};
                         var urlOptions = options.urlOptions || {};
                         urlOptions.url = getUrl();
-                        urlOptions.title = $scope.title;
-                        urlOptions.image = $scope.image;
-                        urlOptions.description = $scope.description || '';
+                        if (!urlOptions.title) urlOptions.title = $scope.title;
+                        if (!urlOptions.image) urlOptions.image = $scope.image;
+                        if (!urlOptions.description) urlOptions.description = $scope.description || '';
                         return ctrl.makeUrl(options.clickUrl || options.popup.url, urlOptions);
                 };
                 this.clickShare = function (e, options) {
@@ -88,7 +88,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                     var def = $q.defer();
                     var urlOptions = options.urlOptions || {};
                     urlOptions.url = getUrl();
-                    urlOptions.title = $scope.title;
+                    if (!urlOptions.title) urlOptions.title = $scope.title;
                     var url = ctrl.makeUrl(options.counter.url, urlOptions),
                         showcounts = angular.isUndefined($scope.showcounts) ? true : $scope.showcounts;
 

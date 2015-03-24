@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
+angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', function($parse) {
     var options = {
         counter: {
             url: '//www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
@@ -38,9 +38,12 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);

@@ -25,6 +25,21 @@ Using:
 </ul>
 ```
 
+You can also define a custom url, title, description or image specific to the service:
+
+```
+<ul ng-social-buttons
+     data-url="'http://news.mistinfo.com/'"
+     data-title="'test'"
+     data-description="'test2'"
+     data-image="'http://s3.mistinfo.com/32/d8/32d8eab76f4c242f665bda66b5edc6c5.jpg'">
+    <li>Share:</li>
+    <li class="ng-social-facebook">Facebook</li>
+    <li class="ng-social-google-plus">Google+</li>
+    <li class="ng-social-twitter" data-title="'Woah check this site!'>Twitter</li>
+</ul>
+```
+
 ```
 angular.module('main', ['ngSocial'])
 ```

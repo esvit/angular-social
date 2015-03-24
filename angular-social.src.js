@@ -40,9 +40,9 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         options = options || {};
                         var urlOptions = options.urlOptions || {};
                         urlOptions.url = getUrl();
-                        urlOptions.title = $scope.title;
-                        urlOptions.image = $scope.image;
-                        urlOptions.description = $scope.description || '';
+                        if (!urlOptions.title) urlOptions.title = $scope.title;
+                        if (!urlOptions.image) urlOptions.image = $scope.image;
+                        if (!urlOptions.description) urlOptions.description = $scope.description || '';
                         return ctrl.makeUrl(options.clickUrl || options.popup.url, urlOptions);
                 };
                 this.clickShare = function (e, options) {
@@ -88,7 +88,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                     var def = $q.defer();
                     var urlOptions = options.urlOptions || {};
                     urlOptions.url = getUrl();
-                    urlOptions.title = $scope.title;
+                    if (!urlOptions.title) urlOptions.title = $scope.title;
                     var url = ctrl.makeUrl(options.counter.url, urlOptions),
                         showcounts = angular.isUndefined($scope.showcounts) ? true : $scope.showcounts;
 
@@ -116,7 +116,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
     }
     ]);
 
-app.directive('ngSocialFacebook', function() {
+app.directive('ngSocialFacebook', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -160,14 +160,17 @@ app.directive('ngSocialFacebook', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     };
-});
+}]);
 
-app.directive('ngSocialTwitter', function() {
+app.directive('ngSocialTwitter', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -212,12 +215,16 @@ app.directive('ngSocialTwitter', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     'use strict';
@@ -273,6 +280,9 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
@@ -280,7 +290,7 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     };
 }]);
 
-app.directive('ngSocialVk', function() {
+app.directive('ngSocialVk', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -332,16 +342,22 @@ app.directive('ngSocialVk', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              description: $parse(attrs.description)(scope),
+              image: $parse(attrs.image)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
+angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', function($parse) {
     var options = {
         counter: {
             url: '//www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
@@ -379,16 +395,19 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialMailru', function() {
+angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function($parse) {
     var options = {
         counter: {
             url: '//connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
@@ -424,16 +443,20 @@ angular.module("ngSocial").directive('ngSocialMailru', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialPinterest', function() {
+angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function($parse) {
     var options = {
         counter: {
             url: '//api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
@@ -467,12 +490,17 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              image: $parse(attrs.image)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 'use strict';
 
@@ -598,6 +626,10 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
             options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
             scope.options = options;
@@ -606,6 +638,7 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
         }
     };
 }]);
+
 app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
     'use strict';
 
@@ -637,6 +670,10 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
@@ -644,7 +681,7 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
     };
 }]);
 
-app.directive('ngSocialLinkedin', function() {
+app.directive('ngSocialLinkedin', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -689,12 +726,17 @@ app.directive('ngSocialLinkedin', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              description: $parse(attrs.description)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 angular.module('ngSocial').run(['$templateCache', function ($templateCache) {
 	$templateCache.put('/views/buttons.html', '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>');

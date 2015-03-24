@@ -1,4 +1,4 @@
-app.directive('ngSocialVk', function() {
+app.directive('ngSocialVk', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -50,9 +50,15 @@ app.directive('ngSocialVk', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              description: $parse(attrs.description)(scope),
+              image: $parse(attrs.image)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
