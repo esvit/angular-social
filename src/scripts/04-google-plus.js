@@ -52,6 +52,9 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);

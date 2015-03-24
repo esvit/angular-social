@@ -1,4 +1,4 @@
-app.directive('ngSocialFacebook', function() {
+app.directive('ngSocialFacebook', ['$parse', function($parse) {
     'use strict';
 
     var options = {
@@ -42,9 +42,12 @@ app.directive('ngSocialFacebook', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     };
-});
+}]);

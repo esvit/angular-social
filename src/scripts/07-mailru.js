@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialMailru', function() {
+angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function($parse) {
     var options = {
         counter: {
             url: '//connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
@@ -36,9 +36,13 @@ angular.module("ngSocial").directive('ngSocialMailru', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
