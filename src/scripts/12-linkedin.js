@@ -1,20 +1,25 @@
-'use strict';
+app.directive('ngSocialLinkedin', ['$parse', function($parse) {
+    'use strict';
 
-angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', function($parse) {
     var options = {
         counter: {
-            url: '//www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
+            url: '//www.linkedin.com/countserv/count/share?url={url}&format=jsonp&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
         },
         popup: {
-            url: 'http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl={url}',
-            width: 550,
-            height: 360
+            url: 'http://www.linkedin.com/shareArticle?mini=true&url={url}&title={title}&summary={description}',
+            width: 600,
+            height: 450
+        },
+        click: function(options) {
+            // Add colon to improve readability
+            if (!/[\.:\-–—]\s*$/.test(options.pageTitle)) options.pageTitle += ':';
+            return true;
         },
         track: {
-            'name': 'Odnoklassniki',
+            'name': 'LinkedIn',
             'action': 'share'
         }
     };
@@ -34,12 +39,14 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', functio
         controller: function($scope) {
         },
         link: function(scope, element, attrs, ctrl) {
-            element.addClass('ng-social-odnoklassniki');
+            element.addClass('ng-social-linkedin');
             if (!ctrl) {
                 return;
             }
             options.urlOptions = {
-              url: $parse(attrs.url)(scope)
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              description: $parse(attrs.description)(scope)
             };
             scope.options = options;
             scope.ctrl = ctrl;

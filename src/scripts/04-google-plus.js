@@ -1,10 +1,9 @@
 app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     'use strict';
 
-    var protocol = location.protocol === 'https:' ? 'https:' : 'http:',
-        options = {
+        var options = {
             counter: {
-                url: protocol === 'http:' ? 'http://share.yandex.ru/gpp.xml?url={url}' : undefined,
+                url: '//share.yandex.ru/gpp.xml?url={url}',
                 getNumber: function(data) {
                     return data.count;
                 },
@@ -53,6 +52,9 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);

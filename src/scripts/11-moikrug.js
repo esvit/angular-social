@@ -3,7 +3,7 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
 
     var options = {
         popup: {
-            url: 'http://share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
+            url: '//share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
             width: 800,
             height: 600
         },
@@ -29,6 +29,10 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);

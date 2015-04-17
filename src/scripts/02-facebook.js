@@ -1,9 +1,9 @@
-app.directive('ngSocialFacebook', function() {
+app.directive('ngSocialFacebook', ['$parse', function($parse) {
     'use strict';
 
     var options = {
         counter: {
-            url: 'http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
+            url: '//graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
                  '&callback=JSON_CALLBACK',
             getNumber: function(data) {
 				if (0 === data.data.length) {
@@ -42,9 +42,12 @@ app.directive('ngSocialFacebook', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     };
-});
+}]);

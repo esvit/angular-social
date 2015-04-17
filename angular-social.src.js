@@ -40,9 +40,9 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         options = options || {};
                         var urlOptions = options.urlOptions || {};
                         urlOptions.url = getUrl();
-                        urlOptions.title = $scope.title;
-                        urlOptions.image = $scope.image;
-                        urlOptions.description = $scope.description || '';
+                        if (!urlOptions.title) urlOptions.title = $scope.title;
+                        if (!urlOptions.image) urlOptions.image = $scope.image;
+                        if (!urlOptions.description) urlOptions.description = $scope.description || '';
                         return ctrl.makeUrl(options.clickUrl || options.popup.url, urlOptions);
                 };
                 this.clickShare = function (e, options) {
@@ -88,7 +88,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                     var def = $q.defer();
                     var urlOptions = options.urlOptions || {};
                     urlOptions.url = getUrl();
-                    urlOptions.title = $scope.title;
+                    if (!urlOptions.title) urlOptions.title = $scope.title;
                     var url = ctrl.makeUrl(options.counter.url, urlOptions),
                         showcounts = angular.isUndefined($scope.showcounts) ? true : $scope.showcounts;
 
@@ -116,12 +116,12 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
     }
     ]);
 
-app.directive('ngSocialFacebook', function() {
+app.directive('ngSocialFacebook', ['$parse', function($parse) {
     'use strict';
 
     var options = {
         counter: {
-            url: 'http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
+            url: '//graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22{url}%22' +
                  '&callback=JSON_CALLBACK',
             getNumber: function(data) {
 				if (0 === data.data.length) {
@@ -160,19 +160,22 @@ app.directive('ngSocialFacebook', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     };
-});
+}]);
 
-app.directive('ngSocialTwitter', function() {
+app.directive('ngSocialTwitter', ['$parse', function($parse) {
     'use strict';
 
     var options = {
         counter: {
-            url: 'http://urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -212,19 +215,23 @@ app.directive('ngSocialTwitter', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
+
 app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     'use strict';
 
-    var protocol = location.protocol === 'https:' ? 'https:' : 'http:',
-        options = {
+        var options = {
             counter: {
-                url: protocol === 'http:' ? 'http://share.yandex.ru/gpp.xml?url={url}' : undefined,
+                url: '//share.yandex.ru/gpp.xml?url={url}',
                 getNumber: function(data) {
                     return data.count;
                 },
@@ -273,6 +280,9 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
@@ -280,12 +290,12 @@ app.directive('ngSocialGooglePlus', ['$parse', function($parse) {
     };
 }]);
 
-app.directive('ngSocialVk', function() {
+app.directive('ngSocialVk', ['$parse', function($parse) {
     'use strict';
 
     var options = {
         counter:{
-            url: 'http://vkontakte.ru/share.php?act=count&url={url}&index={index}',
+            url: '//vkontakte.ru/share.php?act=count&url={url}&index={index}',
             get: function(jsonUrl, deferred, $http) {
                 if (!options._) {
                     options._ = [];
@@ -332,18 +342,25 @@ app.directive('ngSocialVk', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              description: $parse(attrs.description)(scope),
+              image: $parse(attrs.image)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
+
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
+angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', function($parse) {
     var options = {
         counter: {
-            url: 'http://www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
+            url: '//www.odnoklassniki.ru/dk?st.cmd=shareData&ref={url}&cb=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -378,18 +395,22 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
+
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialMailru', function() {
+angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function($parse) {
     var options = {
         counter: {
-            url: 'http://connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
+            url: '//connect.mail.ru/share_count?url_list={url}&callback=1&func=JSON_CALLBACK',
             getNumber: function(data) {
                 for (var url in data) if (data.hasOwnProperty(url)) {
                     return data[url].shares;
@@ -422,18 +443,23 @@ angular.module("ngSocial").directive('ngSocialMailru', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
+
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialPinterest', function() {
+angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function($parse) {
     var options = {
         counter: {
-            url: 'http://api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -464,19 +490,24 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              image: $parse(attrs.image)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
 
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialGithubForks', function() {
     var options = {
         counter: {
-            url: 'https://api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
+            url: '//api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data.forks_count;
             }
@@ -513,12 +544,13 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function() {
         }
     }
 });
+
 'use strict';
 
 angular.module("ngSocial").directive('ngSocialGithub', function() {
     var options = {
         counter: {
-            url: 'https://api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
+            url: '//api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data.watchers_count;
             }
@@ -555,6 +587,7 @@ angular.module("ngSocial").directive('ngSocialGithub', function() {
         }
     }
 });
+
 app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     'use strict';
 
@@ -593,6 +626,10 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
             options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
             scope.options = options;
@@ -601,12 +638,13 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
         }
     };
 }]);
+
 app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
     'use strict';
 
     var options = {
         popup: {
-            url: 'http://share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
+            url: '//share.yandex.ru/go.xml?service=moikrug&url={url}&title={title}',
             width: 800,
             height: 600
         },
@@ -632,12 +670,74 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     };
 }]);
+
+app.directive('ngSocialLinkedin', ['$parse', function($parse) {
+    'use strict';
+
+    var options = {
+        counter: {
+            url: '//www.linkedin.com/countserv/count/share?url={url}&format=jsonp&callback=JSON_CALLBACK',
+            getNumber: function(data) {
+                return data.count;
+            }
+        },
+        popup: {
+            url: 'http://www.linkedin.com/shareArticle?mini=true&url={url}&title={title}&summary={description}',
+            width: 600,
+            height: 450
+        },
+        click: function(options) {
+            // Add colon to improve readability
+            if (!/[\.:\-–—]\s*$/.test(options.pageTitle)) options.pageTitle += ':';
+            return true;
+        },
+        track: {
+            'name': 'LinkedIn',
+            'action': 'share'
+        }
+    };
+    return {
+        restrict: 'C',
+        require: '^?ngSocialButtons',
+        scope: true,
+        replace: true,
+        transclude: true,
+        template: '<li> \
+                    <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
+                        <span class="ng-social-icon"></span> \
+                        <span class="ng-social-text" ng-transclude></span> \
+                    </a> \
+                    <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
+                   </li>',
+        controller: function($scope) {
+        },
+        link: function(scope, element, attrs, ctrl) {
+            element.addClass('ng-social-linkedin');
+            if (!ctrl) {
+                return;
+            }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              description: $parse(attrs.description)(scope)
+            };
+            scope.options = options;
+            scope.ctrl = ctrl;
+            ctrl.init(scope, element, options);
+        }
+    }
+}]);
+
 angular.module('ngSocial').run(['$templateCache', function ($templateCache) {
 	$templateCache.put('/views/buttons.html', '<div class="ng-social-container ng-cloak"><ul class="ng-social" ng-transclude></ul></div>');
 }]);

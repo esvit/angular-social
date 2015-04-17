@@ -3,7 +3,7 @@
 angular.module("ngSocial").directive('ngSocialGithub', function() {
     var options = {
         counter: {
-            url: 'https://api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
+            url: '//api.github.com/repos/{user}/{repository}?callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.data.watchers_count;
             }

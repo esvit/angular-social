@@ -1,9 +1,9 @@
-app.directive('ngSocialTwitter', function() {
+app.directive('ngSocialTwitter', ['$parse', function($parse) {
     'use strict';
 
     var options = {
         counter: {
-            url: 'http://urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//urls.api.twitter.com/1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -43,9 +43,13 @@ app.directive('ngSocialTwitter', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);

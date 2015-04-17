@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module("ngSocial").directive('ngSocialPinterest', function() {
+angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function($parse) {
     var options = {
         counter: {
-            url: 'http://api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
+            url: '//api.pinterest.com/v1/urls/count.json?url={url}&callback=JSON_CALLBACK',
             getNumber: function(data) {
                 return data.count;
             }
@@ -34,9 +34,14 @@ angular.module("ngSocial").directive('ngSocialPinterest', function() {
             if (!ctrl) {
                 return;
             }
+            options.urlOptions = {
+              url: $parse(attrs.url)(scope),
+              title: $parse(attrs.title)(scope),
+              image: $parse(attrs.image)(scope)
+            };
             scope.options = options;
             scope.ctrl = ctrl;
             ctrl.init(scope, element, options);
         }
     }
-});
+}]);
