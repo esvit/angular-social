@@ -36,8 +36,6 @@ app.directive('ngSocialLinkedin', ['$parse', function($parse) {
                     </a> \
                     <span ng-show="count" class="ng-social-counter">{{ count }}</span> \
                    </li>',
-        controller: function($scope) {
-        },
         link: function(scope, element, attrs, ctrl) {
             element.addClass('ng-social-linkedin');
             if (!ctrl) {
