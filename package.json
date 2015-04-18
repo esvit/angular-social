@@ -13,5 +13,5 @@
     "grunt-image-embed": "~0.3.1"
   },
   "name": "angular-social",
-  "version": "0.1.0"
+  "version": "1.0.0"
 }
