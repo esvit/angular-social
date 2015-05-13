@@ -20,7 +20,8 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                 'title': '=',
                 'description': '=',
                 'image': '=',
-                'showcounts': '='
+                'showcounts': '=',
+                'counters': '=?'
             },
             replace: true,
             transclude: true,
@@ -29,10 +30,14 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                 var getUrl = function () {
                     return $scope.url || $location.absUrl();
                 }, ctrl = this;
+                $scope.counters = {};
                 this.init = function (scope, element, options) {
                     if (options.counter) {
                         ctrl.getCount(scope.options).then(function (count) {
                             scope.count = count;
+                            if (options.track) {
+                                $scope.counters[options.track.name] = count;
+                            }
                         });
                     }
                 };
