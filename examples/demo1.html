@@ -24,16 +24,22 @@
         <script src="../src/scripts/11-moikrug.js"></script>
         <script src="../src/scripts/12-linkedin.js"></script>
         <link rel="stylesheet" href="../angular-social.css">
+        <script type="text/javascript">
+            angular.module('main', []).controller('DemoCtrl', function($scope) {
+                $scope.cntrs = {};
+            });
+        </script>
     </head>
 <body ng-app="main">
 
-    <div ng-controller="DemoCtrl">
+    <div ng-controller="DemoCtrl as ctrl">
 
         <ul ng-social-buttons
              data-url="'http://google.com/'"
              data-title="current_title"
              data-description="current_description"
              data-image="'https://www.google.com.ua/images/srpr/logo4w.png'"
+             counters="cntrs"
              showcounts="true">
             <li>Share:</li>
             <li class="ng-social-facebook">Facebook</li>
@@ -49,6 +55,8 @@
             <li class="ng-social-moi-krug">Мой круг</li>
             <li class="ng-social-linkedin">LinkedIn</li>
         </ul>
+
+        {{ cntrs | json }}
 
         <ul ng-social-buttons
              data-url="'http://google.com/'"
