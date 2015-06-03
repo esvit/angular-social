@@ -64,8 +64,8 @@
             <li class="ng-social-odnoklassniki">Одноклассники</li>
             <li class="ng-social-mailru">Мой мир</li>
             <li class="ng-social-pinterest">Pinterest</li>
-            <li class="ng-social-github" user="esvit" repository="ng-table">GitHub</li>
-            <li class="ng-social-github-forks" user="esvit" repository="ng-table">Forks</li>
+            <li class="ng-social-github" user="'esvit'" repository="'ng-table'">GitHub</li>
+            <li class="ng-social-github-forks" user="user" repository="repository">Forks</li>
             <li class="ng-social-stumbleupon">StumbleUpon</li>
             <li class="ng-social-moi-krug">Мой круг</li>
             <li class="ng-social-linkedin">LinkedIn</li>
@@ -78,6 +78,8 @@
         controller('DemoCtrl', function($scope) {
             $scope.current_title = 'Test';
             $scope.current_description = 'Test description';
+            $scope.user = 'esvit';
+            $scope.repository = 'ng-table';
         })
         </script>
     </div>

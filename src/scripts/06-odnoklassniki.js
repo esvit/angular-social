@@ -31,8 +31,10 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', functio
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
     replace: true,
+    scope: {
+      url: "=url"
+    },
     transclude: true,
     template: '<li> \
                     <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
@@ -46,12 +48,17 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', functio
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watch('url', function(newValue, oldValue) {
+        if(newValue) {
+          options.urlOptions = {
+            url: newValue
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);

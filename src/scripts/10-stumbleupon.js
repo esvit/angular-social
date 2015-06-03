@@ -21,7 +21,10 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
-        scope: true,
+        scope: {
+          url: "=url",
+          title: "=title"
+        },
         replace: true,
         transclude: true,
         template: '<li> \
@@ -36,15 +39,21 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
-            options.urlOptions = {
-              url: $parse(attrs.url)(scope),
-              title: $parse(attrs.title)(scope)
-            };
-            var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
-            options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
-            scope.options = options;
-            scope.ctrl = ctrl;
-            ctrl.init(scope, element, options);
+
+            scope.$watchGroup(['title', 'url'], function(newValues, oldValues) {
+              if(newValues) {
+                  options.urlOptions = {
+                    title: newValues[0],
+                    url: newValues[1]
+                  };
+
+                  var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
+                  options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
+		          scope.options = options;
+                  scope.ctrl = ctrl;
+                  ctrl.init(scope, element, options);
+              }
+            });
         }
     };
 }]);
