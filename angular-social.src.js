@@ -144,7 +144,11 @@ app.directive('ngSocialFacebook', ['$parse', function ($parse) {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      url: "=url",
+      description: "=description",
+      title: "=title"
+    },
     replace: true,
     transclude: true,
     template: '<li>' +
@@ -160,12 +164,18 @@ app.directive('ngSocialFacebook', ['$parse', function ($parse) {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+      scope.$watchGroup(['title', 'url', 'description'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1],
+            description: newValues[2]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   };
 }]);
@@ -198,7 +208,11 @@ app.directive('ngSocialTwitter', ['$parse', function ($parse) {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      url: "=url",
+      title: "=title",
+      description: "=description"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -213,13 +227,19 @@ app.directive('ngSocialTwitter', ['$parse', function ($parse) {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['title', 'url', 'description'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1],
+            description: newValues[2]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);
@@ -263,7 +283,11 @@ app.directive('ngSocialGooglePlus', ['$parse', function ($parse) {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      url: "=url",
+      description: "=description",
+      title: "=title"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -278,12 +302,18 @@ app.directive('ngSocialGooglePlus', ['$parse', function ($parse) {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+      scope.$watchGroup(['title', 'url', 'description'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1],
+            description: newValues[2]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   };
 }]);
@@ -323,8 +353,13 @@ app.directive('ngSocialVk', ['$parse', function ($parse) {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
     replace: true,
+    scope: {
+      url: "=url",
+      description: "=description",
+      title: "=title",
+      image: "=image"
+    },
     transclude: true,
     template: '<li> \
                     <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
@@ -338,15 +373,20 @@ app.directive('ngSocialVk', ['$parse', function ($parse) {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope),
-        description: $parse(attrs.description)(scope),
-        image: $parse(attrs.image)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['url', 'description', 'title', 'image'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            url: newValues[0],
+            description: newValues[1],
+            title: newValues[2],
+            image: newValues[3]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);
@@ -384,8 +424,10 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', functio
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
     replace: true,
+    scope: {
+      url: "=url"
+    },
     transclude: true,
     template: '<li> \
                     <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
@@ -399,12 +441,17 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', functio
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watch('url', function(newValue, oldValue) {
+        if(newValue) {
+          options.urlOptions = {
+            url: newValue
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);
@@ -430,8 +477,11 @@ angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function ($par
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
     replace: true,
+    scope: {
+      url: "=url",
+      title: "=title"
+    },
     transclude: true,
     template: '<li> \
                     <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
@@ -445,13 +495,18 @@ angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function ($par
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['title', 'url'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);
@@ -475,7 +530,11 @@ angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function ($
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      url: "=url",
+      title: "=title",
+      image: "=image"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -490,14 +549,19 @@ angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function ($
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope),
-        image: $parse(attrs.image)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+    
+      scope.$watchGroup(['title', 'url', 'image'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1],
+	        image: newValues[2]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);
@@ -517,7 +581,10 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function () {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      user: "=user",
+      repository: "=repository"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -532,13 +599,18 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function () {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        'user': attrs.user,
-        'repository': attrs.repository
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['user', 'repository'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            user: newValues[0],
+            repository: newValues[1]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 });
@@ -558,7 +630,10 @@ angular.module("ngSocial").directive('ngSocialGithub', function () {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      user: "=user",
+      repository: "=repository"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -573,13 +648,18 @@ angular.module("ngSocial").directive('ngSocialGithub', function () {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        'user': attrs.user,
-        'repository': attrs.repository
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['user', 'repository'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            user: newValues[0],
+            repository: newValues[1]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 });
@@ -607,7 +687,10 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
-        scope: true,
+        scope: {
+          url: "=url",
+          title: "=title"
+        },
         replace: true,
         transclude: true,
         template: '<li> \
@@ -622,15 +705,21 @@ app.directive('ngSocialStumbleupon', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
-            options.urlOptions = {
-              url: $parse(attrs.url)(scope),
-              title: $parse(attrs.title)(scope)
-            };
-            var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
-            options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
-            scope.options = options;
-            scope.ctrl = ctrl;
-            ctrl.init(scope, element, options);
+
+            scope.$watchGroup(['title', 'url'], function(newValues, oldValues) {
+              if(newValues) {
+                  options.urlOptions = {
+                    title: newValues[0],
+                    url: newValues[1]
+                  };
+
+                  var proxyUrl = $parse(attrs.proxyUrl)(scope) || '/proxy.php';
+                  options.counter.url = options.counter.url.replace('{proxy}', proxyUrl);
+		          scope.options = options;
+                  scope.ctrl = ctrl;
+                  ctrl.init(scope, element, options);
+              }
+            });
         }
     };
 }]);
@@ -652,7 +741,10 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
-        scope: true,
+        scope: {
+          url: "=url",
+          title: "=title"
+        },
         replace: true,
         transclude: true,
         template: '<li> \
@@ -666,14 +758,19 @@ app.directive('ngSocialMoiKrug', ['$parse', function ($parse) {
             if (!ctrl) {
                 return;
             }
-            options.urlOptions = {
-              url: $parse(attrs.url)(scope),
-              title: $parse(attrs.title)(scope)
-            };
-            scope.options = options;
-            scope.ctrl = ctrl;
-            ctrl.init(scope, element, options);
-        }
+        
+            scope.$watchGroup(['title', 'url'], function(newValues, oldValues) {
+                if(newValues) {
+                   options.urlOptions = {
+                    title: newValues[0],
+                    url: newValues[1]
+                   };
+                   scope.options = options;
+                   scope.ctrl = ctrl;
+                   ctrl.init(scope, element, options);
+               }
+           });
+	}
     };
 }]);
 
@@ -705,7 +802,11 @@ app.directive('ngSocialLinkedin', ['$parse', function($parse) {
     return {
         restrict: 'C',
         require: '^?ngSocialButtons',
-        scope: true,
+        scope: {
+            url: "=url",
+            description: "=description",
+            title: "=title"
+        },
         replace: true,
         transclude: true,
         template: '<li> \
@@ -720,14 +821,18 @@ app.directive('ngSocialLinkedin', ['$parse', function($parse) {
             if (!ctrl) {
                 return;
             }
-            options.urlOptions = {
-              url: $parse(attrs.url)(scope),
-              title: $parse(attrs.title)(scope),
-              description: $parse(attrs.description)(scope)
-            };
-            scope.options = options;
-            scope.ctrl = ctrl;
-            ctrl.init(scope, element, options);
+            scope.$watchGroup(['title', 'url', 'description'], function(newValues, oldValues) {
+                if(newValues) {
+                    options.urlOptions = {
+                        title: newValues[0],
+                        url: newValues[1],
+                        description: newValues[2]
+                    };
+                    scope.options = options;
+                    scope.ctrl = ctrl;
+                    ctrl.init(scope, element, options);
+                }
+            });
         }
     }
 }]);

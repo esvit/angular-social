@@ -37,7 +37,11 @@ app.directive('ngSocialGooglePlus', ['$parse', function ($parse) {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      url: "=url",
+      description: "=description",
+      title: "=title"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -52,12 +56,18 @@ app.directive('ngSocialGooglePlus', ['$parse', function ($parse) {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+      scope.$watchGroup(['title', 'url', 'description'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1],
+            description: newValues[2]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   };
 }]);

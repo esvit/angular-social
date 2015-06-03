@@ -17,7 +17,11 @@ angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function ($
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      url: "=url",
+      title: "=title",
+      image: "=image"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -32,14 +36,19 @@ angular.module("ngSocial").directive('ngSocialPinterest', ['$parse', function ($
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope),
-        image: $parse(attrs.image)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+    
+      scope.$watchGroup(['title', 'url', 'image'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1],
+	        image: newValues[2]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);

@@ -19,8 +19,11 @@ angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function ($par
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
     replace: true,
+    scope: {
+      url: "=url",
+      title: "=title"
+    },
     transclude: true,
     template: '<li> \
                     <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
@@ -34,13 +37,18 @@ angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function ($par
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['title', 'url'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            title: newValues[0],
+            url: newValues[1]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);

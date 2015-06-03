@@ -33,8 +33,13 @@ app.directive('ngSocialVk', ['$parse', function ($parse) {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
     replace: true,
+    scope: {
+      url: "=url",
+      description: "=description",
+      title: "=title",
+      image: "=image"
+    },
     transclude: true,
     template: '<li> \
                     <a ng-href="{{ctrl.link(options)}}" target="_blank" ng-click="ctrl.clickShare($event, options)" class="ng-social-button"> \
@@ -48,15 +53,20 @@ app.directive('ngSocialVk', ['$parse', function ($parse) {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        url: $parse(attrs.url)(scope),
-        title: $parse(attrs.title)(scope),
-        description: $parse(attrs.description)(scope),
-        image: $parse(attrs.image)(scope)
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['url', 'description', 'title', 'image'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            url: newValues[0],
+            description: newValues[1],
+            title: newValues[2],
+            image: newValues[3]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 }]);

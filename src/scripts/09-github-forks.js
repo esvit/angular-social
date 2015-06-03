@@ -13,7 +13,10 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function () {
   return {
     restrict: 'C',
     require: '^?ngSocialButtons',
-    scope: true,
+    scope: {
+      user: "=user",
+      repository: "=repository"
+    },
     replace: true,
     transclude: true,
     template: '<li> \
@@ -28,13 +31,18 @@ angular.module("ngSocial").directive('ngSocialGithubForks', function () {
       if (!ctrl) {
         return;
       }
-      options.urlOptions = {
-        'user': attrs.user,
-        'repository': attrs.repository
-      };
-      scope.options = options;
-      scope.ctrl = ctrl;
-      ctrl.init(scope, element, options);
+
+      scope.$watchGroup(['user', 'repository'], function(newValues, oldValues) {
+        if(newValues) {
+          options.urlOptions = {
+            user: newValues[0],
+            repository: newValues[1]
+          };
+          scope.options = options;
+          scope.ctrl = ctrl;
+          ctrl.init(scope, element, options);
+        }
+      });
     }
   }
 });
