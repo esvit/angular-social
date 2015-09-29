@@ -422,7 +422,7 @@ angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function ($par
       }
     },
     popup: {
-      url: 'http://connect.mail.ru/share?share_url={url}&title={title}',
+      url: 'http://connect.mail.ru/share?share_url={url}&title={title}&description={description}&imageurl={image}',
       width: 550,
       height: 360
     }
