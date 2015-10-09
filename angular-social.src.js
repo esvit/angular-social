@@ -32,7 +32,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                 this.init = function (scope, element, options) {
                     if (options.counter) {
                         ctrl.getCount(scope.options).then(function (count) {
-                            scope.count = count;
+                            scope.count = parseInt(count, 10);
                         });
                     }
                 };
