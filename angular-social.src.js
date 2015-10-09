@@ -32,7 +32,7 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                 this.init = function (scope, element, options) {
                     if (options.counter) {
                         ctrl.getCount(scope.options).then(function (count) {
-                            scope.count = count;
+                            scope.count = parseInt(count, 10);
                         });
                     }
                 };
@@ -422,7 +422,7 @@ angular.module("ngSocial").directive('ngSocialMailru', ['$parse', function ($par
       }
     },
     popup: {
-      url: 'http://connect.mail.ru/share?share_url={url}&title={title}',
+      url: 'http://connect.mail.ru/share?share_url={url}&title={title}&description={description}&imageurl={image}',
       width: 550,
       height: 360
     }
