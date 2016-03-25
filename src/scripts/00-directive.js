@@ -50,7 +50,9 @@ app.directive('ngSocialButtons', ['$compile', '$q', '$parse', '$http', '$locatio
                         return;
                     }
                     e.preventDefault();
-
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    
                     if (options.track && typeof _gaq != 'undefined' && angular.isArray(_gaq)) {
                         _gaq.push(['_trackSocial', options.track.name, options.track.action, $scope.url]);
                     }
