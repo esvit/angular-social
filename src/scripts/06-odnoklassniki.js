@@ -3,7 +3,7 @@
 angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', function ($parse) {
   var options = {
     counter: {
-      url: 'http://connect.ok.ru/dk?st.cmd=extLike&ref={url}&uid={index}',
+      url: 'https://connect.ok.ru/dk?st.cmd=extLike&ref={url}&uid={index}',
       get: function (jsonUrl, deferred, $http) {
         if (!options._) {
           options._ = [];
@@ -19,7 +19,7 @@ angular.module("ngSocial").directive('ngSocialOdnoklassniki', ['$parse', functio
       }
     },
     popup: {
-      url: 'http://connect.ok.ru/dk?st.cmd=WidgetSharePreview&service=odnoklassniki&st.shareUrl={url}',
+      url: 'https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&service=odnoklassniki&st.shareUrl={url}',
       width: 550,
       height: 360
     },
